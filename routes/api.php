@@ -1,19 +1,11 @@
 <?php
 
-use App\Http\Controllers\Order;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::post('/register', [Auth\RegisterController::class, 'register'])->name("register");
+Route::post('/login', [Auth\LoginController::class, "login"])->name("login");
 
-Route::get('/users', function (Request $request) {
-
-    return User::all();
-});
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post("orders", Order\StoreController::class)->name("orders.store");
+Route::middleware('auth:api')->group(function () {
+    Route::post('/logout', [Auth\LogoutController::class, "logout"])->name("logout");
 });
