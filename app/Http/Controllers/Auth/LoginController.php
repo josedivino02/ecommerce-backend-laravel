@@ -3,25 +3,37 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends Controller
 {
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        $data = request()->validate([
-            "email"    => 'required',
-            'password' => 'required',
+        $request->validate([
+            "email"    => ["required", "email"],
+            "password" => ["required"],
         ]);
 
-        if (!auth()->attempt($data)) {
-            throw ValidationException::withMessages([
-                'email' => __("auth.failed"),
-            ]);
+        $credentials = $request->only("email", "password");
+
+        try {
+            if ($token = !JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'Invalid credentials!'], Response::HTTP_UNAUTHORIZED);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'It was not possible to create the token.'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        request()->session()->regenerate();
-
-        return response()->noContent();
+        return response()->json(
+            [
+                'access_token' => $token,
+                'token_type'   => "bearer",
+                "expires_in"   => auth()->factory()->getTTL() * 60,
+            ],
+            Response::HTTP_OK
+        );
     }
 }
