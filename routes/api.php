@@ -10,3 +10,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/register', [Auth\RegisterController::class])->name("register");
 Route::post('/login', [Auth\LoginController::class])->name("login");
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('/logout', [Auth\LogoutController::class])->name("logout");
+});
