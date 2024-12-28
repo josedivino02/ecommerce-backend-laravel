@@ -20,7 +20,7 @@ class LoginController extends Controller
         $credentials = $request->only("email", "password");
 
         try {
-            if ($token = !JWTAuth::attempt($credentials)) {
+            if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'Invalid credentials!'], Response::HTTP_UNAUTHORIZED);
             }
         } catch (JWTException $e) {
@@ -31,7 +31,7 @@ class LoginController extends Controller
             [
                 'access_token' => $token,
                 'token_type'   => "bearer",
-                "expires_in"   => auth()->factory()->getTTL() * 60,
+                "expires_in"   => config('jwt.ttl') * 60,
             ],
             Response::HTTP_OK
         );
