@@ -10,11 +10,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
-    public function __invoke(Request $request)
+    public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
             "name"     => ["required", "min:3", "max:255"],
-            "email"    => ["required", "min:3", "max:255", "email", "unique::users", "confirmed"],
+            "email"    => ["required", "min:3", "max:255", "email", "unique:users,email", "confirmed"],
             "password" => ["required", "min:8", "max:40", "confirmed"],
         ]);
 
