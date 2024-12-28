@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -8,7 +8,5 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/users', function (Request $request) {
-
-    return User::all();
-});
+Route::post('/register', [Auth\RegisterController::class])->name("register");
+Route::post('/login', [Auth\LoginController::class])->name("login");
