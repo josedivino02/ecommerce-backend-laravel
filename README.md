@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # ecommerce-backend-laravel
 Um sistema de e-commerce desenvolvido em Laravel, com integração de um módulo de API para facilitar a comunicação entre serviços e a gestão eficiente de dados.
 =======
@@ -68,4 +68,4 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
->>>>>>> ea674cf (Set up a fresh Laravel app)
+
