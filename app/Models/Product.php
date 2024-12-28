@@ -11,4 +11,8 @@ class Product extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }
