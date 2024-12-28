@@ -18,6 +18,7 @@ return new class () extends Migration {
             $table->integer('stock');
             $table->string('sku')->unique();
             $table->string('image_url')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
