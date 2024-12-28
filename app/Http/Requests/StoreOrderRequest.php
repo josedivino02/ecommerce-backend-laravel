@@ -26,7 +26,7 @@ class StoreOrderRequest extends FormRequest
             'shipping_cost'    => ['required', 'numeric'],
             'total_price'      => ['required', 'numeric'],
             'discount'         => ['required', 'numeric'],
-            'items'            => ['required', 'array', new AtLeastOneItem()],
+            // 'items'            => ['required', 'array', new AtLeastOneItem()],
         ];
     }
 }
