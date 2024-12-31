@@ -18,7 +18,6 @@ class JwtAuthenticationMiddleware
     public function handle(Request $request, Closure $next)
     {
         try {
-            // Verifica se o token JWT é válido
             JWTAuth::parseToken()->authenticate();
         } catch (TokenExpiredException $e) {
             return response()->json(['error' => 'Token has expired'], Response::HTTP_UNAUTHORIZED);
