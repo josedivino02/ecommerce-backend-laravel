@@ -2,31 +2,38 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\AtLeastOneItem;
+use App\Models\Order;
+use App\Rules\{ValidPaymentMethod, ValidShippingMethod};
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @property-read string $order
- */
 class StoreOrderRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return Gate::allows('create', $this->route()->order);
+        return Gate::allows("create", Order::class);
     }
 
     public function rules(): array
     {
         return [
-            'shipping_address' => ['required', 'string'],
-            'billing_address'  => ['nullable', 'string'],
-            'payment_method'   => ['required', 'string'],
-            'shipping_method'  => ['required', 'string'],
-            'shipping_cost'    => ['required', 'numeric'],
-            'total_price'      => ['required', 'numeric'],
-            'discount'         => ['required', 'numeric'],
-            // 'items'            => ['required', 'array', new AtLeastOneItem()],
+            "shipping_address" => ["required"],
+            "billing_address"  => ["required"],
+            "payment_method"   => ["required", new ValidPaymentMethod()],
+            "shipping_method"  => ["required", new ValidShippingMethod()],
+            "shipping_cost"    => ["required"],
+            "total_price"      => ["required"],
+            "discount"         => ["required"],
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            "errors" => $validator->errors(),
+        ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }
