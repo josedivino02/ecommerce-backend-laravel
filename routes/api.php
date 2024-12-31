@@ -1,19 +1,19 @@
 <?php
 
-use App\Http\Controllers\Order;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Product;
+use App\Http\Controllers\{Auth, Order};
+use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::post('/register', [Auth\RegisterController::class, 'register'])->name("register");
+Route::post('/login', [Auth\LoginController::class, "login"])->name("login");
 
-Route::get('/users', function (Request $request) {
+Route::middleware('auth:api')->group(function () {
+    Route::post("/orders", [Order\StoreController::class, "store"])->name("orders.store");
 
-    return User::all();
-});
+    Route::prefix("products")->middleware(IsAdminMiddleware::class)->group(function () {
+        Route::post("/", [Product\StoreController::class, "store"])->name("products.store");
+    });
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post("orders", Order\StoreController::class)->name("orders.store");
+    Route::post('/logout', [Auth\LogoutController::class, "logout"])->name("logout");
 });
