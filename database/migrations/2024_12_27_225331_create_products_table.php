@@ -12,12 +12,14 @@ return new class () extends Migration {
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->index();
             $table->string('name');
             $table->string('description')->nullable();
             $table->decimal('price', 10, 2);
             $table->integer('stock');
             $table->string('sku')->unique();
             $table->string('image_url')->nullable();
+            $table->string("status")->default("active");
             $table->softDeletes();
             $table->timestamps();
         });
