@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Order;
-use App\Rules\{ValidPaymentMethod, ValidShippingMethod};
+use App\Rules\{AtLeastOneItem, ProductExists, QuantityProduct, ValidPaymentMethod, ValidShippingCost, ValidShippingMethod};
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -20,13 +20,16 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "shipping_address" => ["required"],
-            "billing_address"  => ["required"],
-            "payment_method"   => ["required", new ValidPaymentMethod()],
-            "shipping_method"  => ["required", new ValidShippingMethod()],
-            "shipping_cost"    => ["required"],
-            "total_price"      => ["required"],
-            "discount"         => ["required"],
+            "shipping_address"   => ["required"],
+            "billing_address"    => ["required"],
+            "payment_method"     => ["required", new ValidPaymentMethod()],
+            "shipping_method"    => ["required", new ValidShippingMethod()],
+            "shipping_costs_id"  => ["required", new ValidShippingCost()],
+            "discount"           => ["required", "numeric", "min:0"],
+            "items"              => ["required", "array", new AtLeastOneItem()],
+            "items.*.product_id" => ["required", "numeric", "integer", new ProductExists()],
+            "items.*.quantity"   => ["required", "numeric", "integer", $this->validateQuantityWithProductId()],
+            "items.*.unit_price" => ["required", "numeric", "min:0"],
         ];
     }
 
@@ -36,4 +39,21 @@ class StoreOrderRequest extends FormRequest
             "errors" => $validator->errors(),
         ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }
+
+    protected function validateQuantityWithProductId(): callable
+    {
+        return function ($attribute, $value, $fail) {
+            $index     = $this->extractIndex($attribute);
+            $productId = $this->input("items.{$index}.product_id");
+            (new QuantityProduct($productId))->validate($attribute, $value, $fail);
+        };
+    }
+
+    protected function extractIndex(string $attribute): ?int
+    {
+        preg_match('/items\.(\d+)\.quantity/', $attribute, $matches);
+
+        return $matches[1] ?? null;
+    }
+
 }

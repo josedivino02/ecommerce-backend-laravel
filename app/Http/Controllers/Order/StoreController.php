@@ -12,21 +12,42 @@ class StoreController extends Controller
 {
     public function store(StoreOrderRequest $request)
     {
+        $totalPrice = $this->calculateTotalPrice($request);
+
         $order = user()->orders()
             ->create([
-                'shipping_address'  => $request->shipping_address,
-                'billing_address'   => $request->billing_address,
-                'payment_method'    => $request->payment_method,
-                'payment_status'    => PaymentStatus::PENDING,
-                'shipping_method'   => $request->shipping_method,
-                'shipping_status'   => ShippingStatus::PROCESSING,
-                'shipping_cost'     => $request->shipping_cost,
-                'total_price'       => $request->total_price,
-                'discount'          => $request->discount,
-                'verification_code' => strtoupper(Str::random(10)),
-                'status'            => OrderStatus::PENDING,
+                "shipping_address"  => $request->shipping_address,
+                "billing_address"   => $request->billing_address,
+                "payment_method"    => $request->payment_method,
+                "payment_status"    => PaymentStatus::PENDING,
+                "shipping_method"   => $request->shipping_method,
+                "shipping_status"   => ShippingStatus::PROCESSING,
+                "shipping_costs_id" => $request->shipping_costs_id,
+                "total_price"       => $totalPrice,
+                "discount"          => $request->discount,
+                "verification_code" => strtoupper(Str::random(10)),
+                "status"            => OrderStatus::PENDING,
             ]);
 
+        collect($request->items)->each(function ($item) use ($order) {
+            $order->orderItems()->create([
+                "product_id"  => $item["product_id"],
+                "quantity"    => $item["quantity"],
+                "unit_price"  => $item["unit_price"],
+                "total_price" => $item["unit_price"] * $item["quantity"],
+                "tracking"    => now()->timestamp . rand(100, 999),
+            ]);
+        });
+
         return OrderResource::make($order);
+    }
+
+    private function calculateTotalPrice(StoreOrderRequest $request)
+    {
+        $totalPrice = collect($request->items)->reduce(function ($acc, $item) {
+            return $acc + ($item["unit_price"] * $item["quantity"]);
+        }, 0);
+
+        return $totalPrice - $request->discount;
     }
 }
