@@ -12,6 +12,7 @@ return new class () extends Migration {
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->foreignId("order_id")->index();
             $table->foreignId("product_id")->index();
             $table->integer("quantity")->default(1);
