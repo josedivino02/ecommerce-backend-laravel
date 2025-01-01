@@ -12,7 +12,7 @@ class Order extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public function items(): HasMany
+    public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
@@ -20,5 +20,10 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function shippingCost(): BelongsTo
+    {
+        return $this->belongsTo(ShippingCost::class);
     }
 }
