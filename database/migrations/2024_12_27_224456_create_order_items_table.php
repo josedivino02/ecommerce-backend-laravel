@@ -18,6 +18,7 @@ return new class () extends Migration {
             $table->decimal("unit_price", 8, 2)->default(0);
             $table->decimal("total_price", 8, 2)->default(0);
             $table->string("tracking");
+            $table->string("status");
             $table->softDeletes();
             $table->timestamps();
         });

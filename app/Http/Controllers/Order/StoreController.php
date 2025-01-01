@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Enums\{OrderStatus, PaymentStatus, ShippingStatus};
+use App\Enums\{OrderItemsStatus, OrderStatus, PaymentStatus, ShippingStatus};
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Resources\OrderResource;
@@ -36,6 +36,7 @@ class StoreController extends Controller
                 "unit_price"  => $item["unit_price"],
                 "total_price" => $item["unit_price"] * $item["quantity"],
                 "tracking"    => now()->timestamp . rand(100, 999),
+                "status"      => OrderItemsStatus::PENDING,
             ]);
         });
 
