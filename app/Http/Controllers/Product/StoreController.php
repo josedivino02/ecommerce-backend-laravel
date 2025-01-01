@@ -6,6 +6,7 @@ use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Str;
 
 class StoreController extends Controller
 {
@@ -13,6 +14,7 @@ class StoreController extends Controller
     {
         $product = user()->products()
             ->create([
+                "uuid"        => Str::uuid(),
                 "name"        => $request->name,
                 "description" => $request->description,
                 "price"       => $request->price,

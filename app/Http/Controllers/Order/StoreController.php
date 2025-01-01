@@ -16,6 +16,7 @@ class StoreController extends Controller
 
         $order = user()->orders()
             ->create([
+                "uuid"              => Str::uuid(),
                 "shipping_address"  => $request->shipping_address,
                 "billing_address"   => $request->billing_address,
                 "payment_method"    => $request->payment_method,
@@ -31,6 +32,7 @@ class StoreController extends Controller
 
         collect($request->items)->each(function ($item) use ($order) {
             $order->orderItems()->create([
+                "uuid"        => Str::uuid(),
                 "product_id"  => $item["product_id"],
                 "quantity"    => $item["quantity"],
                 "unit_price"  => $item["unit_price"],
