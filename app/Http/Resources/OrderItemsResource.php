@@ -10,14 +10,15 @@ class OrderItemsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id"          => $this->id,
+            "uuid"        => $this->uuid,
             "product_id"  => $this->product_id,
+            "tracking"    => $this->tracking,
             "price"       => $this->unit_price,
             "quantity"    => $this->quantity,
             "total_price" => $this->total_price,
-            "tracking"    => $this->tracking,
-            'created_at'  => $this->created_at->format('Y-m-d H:i:s'),
-            'updated_at'  => $this->updated_at->format('Y-m-d H:i:s'),
+            "status"      => $this->status,
+            "created_at"  => $this->created_at->format("Y-m-d H:i:s"),
+            "updated_at"  => $this->updated_at->format("Y-m-d H:i:s"),
         ];
     }
 }
