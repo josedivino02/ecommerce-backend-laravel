@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Enums\{OrderStatus, PaymentStatus, ShippingStatus};
+use App\Enums\{OrderItemsStatus, OrderStatus, PaymentStatus, ShippingStatus};
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Resources\OrderResource;
@@ -16,6 +16,7 @@ class StoreController extends Controller
 
         $order = user()->orders()
             ->create([
+                "uuid"              => Str::uuid(),
                 "shipping_address"  => $request->shipping_address,
                 "billing_address"   => $request->billing_address,
                 "payment_method"    => $request->payment_method,
@@ -31,11 +32,13 @@ class StoreController extends Controller
 
         collect($request->items)->each(function ($item) use ($order) {
             $order->orderItems()->create([
+                "uuid"        => Str::uuid(),
                 "product_id"  => $item["product_id"],
                 "quantity"    => $item["quantity"],
                 "unit_price"  => $item["unit_price"],
                 "total_price" => $item["unit_price"] * $item["quantity"],
                 "tracking"    => now()->timestamp . rand(100, 999),
+                "status"      => OrderItemsStatus::PENDING,
             ]);
         });
 

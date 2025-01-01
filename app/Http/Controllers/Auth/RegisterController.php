@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Rules\ValidIsAdmin;
 use Illuminate\Http\{Request};
 use Illuminate\Support\Facades\{Hash, Validator};
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
@@ -25,6 +26,7 @@ class RegisterController extends Controller
         }
 
         User::create([
+            "uuid"     => Str::uuid(),
             "name"     => $request->name,
             "email"    => $request->email,
             "password" => Hash::make($request->password),

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\ShippingCost;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ShippingCostSeeder extends Seeder
 {
@@ -13,18 +14,21 @@ class ShippingCostSeeder extends Seeder
             "name"   => "Free",
             "cost"   => 1.00,
             "status" => "active",
+            "uuid"   => Str::uuid(),
         ]);
 
         ShippingCost::create([
             "name"   => "Express",
             "cost"   => 25.00,
             "status" => "active",
+            "uuid"   => Str::uuid(),
         ]);
 
         ShippingCost::create([
             "name"   => "Standard",
             "cost"   => 10.00,
             "status" => "active",
+            "uuid"   => Str::uuid(),
         ]);
     }
 }
