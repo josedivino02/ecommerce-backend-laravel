@@ -20,11 +20,11 @@ class JwtAuthenticationMiddleware
         try {
             JWTAuth::parseToken()->authenticate();
         } catch (TokenExpiredException $e) {
-            return response()->json(['error' => 'Token has expired'], Response::HTTP_UNAUTHORIZED);
+            return response()->json(["error" => "The access token has expired, please log in again."], Response::HTTP_UNAUTHORIZED);
         } catch (TokenInvalidException $e) {
-            return response()->json(['error' => 'Token is invalid'], Response::HTTP_UNAUTHORIZED);
+            return response()->json(["error" => "The access token is invalid, log in again to generate a valid token"], Response::HTTP_UNAUTHORIZED);
         } catch (JWTException $e) {
-            return response()->json(['error' => 'Token not provided'], Response::HTTP_BAD_REQUEST);
+            return response()->json(["error" => "Token not provided, please log in"], Response::HTTP_BAD_REQUEST);
         }
 
         return $next($request);
