@@ -7,15 +7,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
-            'data' => [
+            "message" => "Order created successfully",
+            'data'    => [
                 'id'                => $this->id,
                 'shipping_address'  => $this->shipping_address,
                 'billing_address'   => $this->billing_address,
@@ -28,9 +24,11 @@ class OrderResource extends JsonResource
                 'discount'          => $this->discount,
                 'verification_code' => $this->verification_code,
                 'status'            => $this->status,
+                "items"             => OrderItemsResource::collection($this->orderItems),
                 'created_by'        => [
-                    "id"   => $this->user->id,
-                    "name" => $this->user->name,
+                    "id"    => $this->user->id,
+                    "name"  => $this->user->name,
+                    "email" => $this->user->email,
                 ],
                 'created_at' => $this->created_at->format('Y-m-d H:i:s'),
                 'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
