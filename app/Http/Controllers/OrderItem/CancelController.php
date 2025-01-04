@@ -21,7 +21,10 @@ class CancelController extends Controller
             ->where("uuid", $request->item)
             ->first();
 
-        dd($item);
+        $order->update([
+            "total_price" => ($order->total_price - $item->total_price),
+        ]);
+
         $item->update([
             "status" => OrderItemsStatus::CANCELED,
         ]);
