@@ -3,7 +3,6 @@
 namespace App\Rules;
 
 use App\Enums\{OrderStatus, PaymentStatus, ShippingStatus};
-use App\Models\Order;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,8 +10,7 @@ class ValidOrderForCancellation implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $order = Order::where("uuid", $value)
-            ->first();
+        $order = $value;
 
         if (!$order) {
             $fail("Requested order were not found for cancellation.");
