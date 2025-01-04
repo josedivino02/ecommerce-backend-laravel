@@ -9,7 +9,10 @@ Route::post('/register', [Auth\RegisterController::class, 'register'])->name("re
 Route::post('/login', [Auth\LoginController::class, "login"])->name("login");
 
 Route::middleware([JwtAuthenticationMiddleware::class])->group(function () {
-    Route::post("/orders", [Order\StoreController::class, "store"])->name("orders.store");
+    Route::prefix("orders")->group(function () {
+        Route::post("/", [Order\StoreController::class, "store"])->name("orders.store");
+        Route::put("/{order}/cancel", [Order\CancelController::class, "cancel"])->name("orders.cancel");
+    });
 
     Route::prefix("products")->middleware(IsAdminMiddleware::class)->group(function () {
         Route::post("/", [Product\StoreController::class, "store"])->name("products.store");
