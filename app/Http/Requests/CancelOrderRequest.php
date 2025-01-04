@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Order;
 use App\Rules\ValidOrderForCancellation;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -21,9 +20,7 @@ class CancelOrderRequest extends FormRequest
 
     public function authorize(): bool
     {
-        $order = Order::withTrashed()
-            ->where('uuid', $this->route()->order)
-            ->first();
+        $order = $this->route()->order;
 
         return $order && Gate::allows("cancel", $order);
     }
@@ -38,7 +35,7 @@ class CancelOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "order" => ["required", "string", new ValidOrderForCancellation()],
+            "order" => ["required", new ValidOrderForCancellation()],
         ];
     }
 }
