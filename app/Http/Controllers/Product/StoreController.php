@@ -21,6 +21,7 @@ class StoreController extends Controller
                 "stock"       => $request->stock,
                 "sku"         => $request->sku,
                 "image_url"   => $request->image_url,
+                "category_id" => $request->category,
                 "status"      => ProductStatus::ACTIVE,
             ]);
 

@@ -17,7 +17,7 @@ class CategoryResource extends JsonResource
                 "uuid"        => $this->uuid,
                 "name"        => $this->name,
                 "slug"        => $this->slug,
-                "sub"         => $this->subCategory,
+                "sub"         => $this->sub,
                 "description" => $this->description,
                 "created_at"  => $this->created_at->format("Y-m-d H:i:s"),
                 "updated_at"  => $this->updated_at->format("Y-m-d H:i:s"),

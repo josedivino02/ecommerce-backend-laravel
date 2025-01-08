@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Product;
+use App\Rules\SubCategoryExists;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -25,6 +26,7 @@ class StoreProductRequest extends FormRequest
             "stock"       => ["required", "numeric", "integer", "min:0"],
             "sku"         => ["required", "unique:products,sku", "max:50"],
             "image_url"   => ["nullable", "url"],
+            "category"    => ["required", "integer", new SubCategoryExists()],
         ];
     }
 
