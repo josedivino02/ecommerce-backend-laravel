@@ -18,6 +18,7 @@ class ProductSeeder extends Seeder
             "sku"         => "CAM001",
             "user_id"     => 1,
             "uuid"        => Str::uuid(),
+            "category_id" => 1,
         ]);
 
         Product::create([
@@ -28,6 +29,7 @@ class ProductSeeder extends Seeder
             "sku"         => "SMX12345",
             "user_id"     => 1,
             "uuid"        => Str::uuid(),
+            "category_id" => 2,
         ]);
 
         Product::create([
@@ -38,6 +40,7 @@ class ProductSeeder extends Seeder
             "sku"         => "CHO200G",
             "user_id"     => 1,
             "uuid"        => Str::uuid(),
+            "category_id" => 3,
         ]);
 
         Product::create([
@@ -48,6 +51,7 @@ class ProductSeeder extends Seeder
             "sku"         => "OCUAV123",
             "user_id"     => 1,
             "uuid"        => Str::uuid(),
+            "category_id" => 1,
         ]);
 
         Product::create([
@@ -58,6 +62,7 @@ class ProductSeeder extends Seeder
             "sku"         => "TENE38",
             "user_id"     => 1,
             "uuid"        => Str::uuid(),
+            "category_id" => 4,
         ]);
 
         Product::create([
@@ -68,6 +73,7 @@ class ProductSeeder extends Seeder
             "sku"         => "PANALUX5",
             "user_id"     => 1,
             "uuid"        => Str::uuid(),
+            "category_id" => 4,
         ]);
     }
 }
