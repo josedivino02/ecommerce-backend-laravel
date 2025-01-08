@@ -8,6 +8,11 @@ class CategoryPolicy
 {
     public function create(User $user): bool
     {
-        return auth()->check() && user()->isAdmin === 'S';
+        return auth()->check() && $this->isAdmin();
+    }
+
+    public function isAdmin(): bool
+    {
+        return user()->isAdmin === 'S';
     }
 }
