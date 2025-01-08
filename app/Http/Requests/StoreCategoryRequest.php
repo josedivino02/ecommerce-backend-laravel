@@ -29,7 +29,7 @@ class StoreCategoryRequest extends FormRequest
         return [
             "name"        => ["required", "string", "unique:categories,name", "min:1", "max:255"],
             "description" => ["required", "string", "min:1"],
-            "subcategory" => ["nullable", new SubCategoryExists()],
+            "subcategory" => ["nullable", "integer", new SubCategoryExists()],
         ];
     }
 }
