@@ -17,7 +17,7 @@ class StoreController extends Controller
             "uuid"        => Str::uuid(),
             "name"        => $request->name,
             "slug"        => Str::slug($request->name),
-            "sub"         => !empty($request->subcategory) ? $request->subcategory : "",
+            "sub"         => $request->subcategory,
             "description" => $request->description,
             "status"      => CategoryStatus::ACTIVE,
         ]);
