@@ -20,4 +20,9 @@ class CategoryPolicy
     {
         return auth()->check() && $this->isAdmin();
     }
+
+    public function delete(User $user): bool
+    {
+        return auth()->check() && $this->isAdmin();
+    }
 }
