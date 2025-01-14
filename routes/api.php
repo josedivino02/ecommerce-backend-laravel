@@ -23,6 +23,7 @@ Route::middleware([JwtAuthenticationMiddleware::class])->group(function () {
         Route::post("/", [Category\StoreController::class, "store"])->name("categories.store");
         Route::get("/", [Category\IndexController::class, "index"])->name("categories.index");
         Route::put("/{category}/update", [Category\UpdateController::class, "update"])->name("categories.update");
+        Route::delete("/{category}/delete", [Category\DeleteController::class, "delete"])->name("category.delete");
     });
 
     Route::post('/logout', [Auth\LogoutController::class, "logout"])->name("logout");
