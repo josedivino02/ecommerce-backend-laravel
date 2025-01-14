@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryIndexResource;
 use App\Models\Category;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
@@ -14,7 +14,7 @@ class IndexController extends Controller
         $category = Category::query()
             ->with("subCategories")
             ->filter($request->all())
-            ->paginate();
+            ->paginate(10);
 
         return CategoryIndexResource::collection($category);
     }
