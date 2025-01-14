@@ -10,16 +10,13 @@ class CategoryIndexResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "data" => [
-                "uuid"           => $this->uuid,
-                "name"           => $this->name,
-                "slug"           => $this->slug,
-                "sub"            => $this->sub,
-                "description"    => $this->description,
-                "sub_categories" => CategoryIndexResource::collection($this->whenLoaded('subCategories')),
-                "created_at"     => $this->created_at->format("Y-m-d H:i:s"),
-                "updated_at"     => $this->updated_at->format("Y-m-d H:i:s"),
-            ],
+            "uuid"           => $this->uuid,
+            "name"           => $this->name,
+            "slug"           => $this->slug,
+            "sub"            => $this->sub,
+            "description"    => $this->description,
+            "status"         => $this->status,
+            "sub_categories" => CategoryIndexResource::collection($this->whenLoaded('subCategories')),
         ];
     }
 }
