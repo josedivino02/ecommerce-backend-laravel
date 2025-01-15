@@ -15,4 +15,14 @@ class CategoryPolicy
     {
         return user()->isAdmin === 'S';
     }
+
+    public function update(User $user): bool
+    {
+        return auth()->check() && $this->isAdmin();
+    }
+
+    public function delete(User $user): bool
+    {
+        return auth()->check() && $this->isAdmin();
+    }
 }
