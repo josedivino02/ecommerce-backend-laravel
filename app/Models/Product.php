@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use App\Trait\RouteBindingResolver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
 use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 
 class Product extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
     use SoftDeletes;
+    use RouteBindingResolver;
 
     public function user(): BelongsTo
     {

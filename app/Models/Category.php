@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use App\Trait\Filterable;
+use App\Trait\{Filterable, RouteBindingResolver};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\{HasMany};
 use Illuminate\Database\Eloquent\{Builder, Model};
-use Symfony\Component\HttpFoundation\Response;
 
 class Category extends Model
 {
-    /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory;
     use Filterable;
+    use RouteBindingResolver;
 
     public function products(): HasMany
     {
@@ -32,18 +31,5 @@ class Category extends Model
     public function scopeStatus(Builder $query): Builder
     {
         return $query->where("status", "=", "active");
-    }
-
-    public function resolveRouteBinding($value, $field = null)
-    {
-        $category = $this->where($field ?? "id", $value)->first();
-
-        if (!$category) {
-            abort(response()->json([
-                "error" => "The category was not found",
-            ], Response::HTTP_NOT_FOUND));
-        }
-
-        return $category;
     }
 }
