@@ -5,10 +5,10 @@ use App\Http\Controllers\{Auth, Category, Order, OrderItem};
 use App\Http\Middleware\{IsAdminMiddleware, JwtAuthenticationMiddleware};
 use Illuminate\Support\Facades\Route;
 
-Route::post('/register', [Auth\RegisterController::class, 'register'])->name("register");
-Route::post('/login', [Auth\LoginController::class, "login"])->name("login");
+Route::post("/register", [Auth\RegisterController::class, "register"])->name("register");
+Route::middleware(["throttle:login"])->post("/login", [Auth\LoginController::class, "login"])->name("login");
 
-Route::middleware([JwtAuthenticationMiddleware::class])->group(function () {
+Route::middleware([JwtAuthenticationMiddleware::class, "throttle:api"])->group(function () {
     Route::prefix("orders")->group(function () {
         Route::post("/", [Order\StoreController::class, "store"])->name("orders.store");
         Route::put("/{order}/cancel", [Order\CancelController::class, "cancel"])->name("orders.cancel");
@@ -26,5 +26,5 @@ Route::middleware([JwtAuthenticationMiddleware::class])->group(function () {
         Route::delete("/{category}/delete", [Category\DeleteController::class, "delete"])->name("category.delete");
     });
 
-    Route::post('/logout', [Auth\LogoutController::class, "logout"])->name("logout");
+    Route::post("/logout", [Auth\LogoutController::class, "logout"])->name("logout");
 });

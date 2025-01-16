@@ -7,19 +7,26 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         Model::unguard();
+
+        genericRateLimiter(
+            "api",
+            "RATE_LIMITER_API",
+            "perHour"
+        );
+        genericRateLimiter(
+            "login",
+            "RATE_LIMITER_LOGIN",
+            "perMinute",
+            "The number of attempts has been exceeded. Please wait one minute."
+        );
+
     }
 }
