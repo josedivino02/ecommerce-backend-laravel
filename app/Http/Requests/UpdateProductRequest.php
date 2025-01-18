@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Product;
 use App\Rules\{CategoryExists, ValidProductForUpdated, ValidProductStatus};
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -21,7 +20,9 @@ class UpdateProductRequest extends FormRequest
 
     public function authorize(): bool
     {
-        return Gate::allows("update", Product::class);
+        $product = $this->route()->product;
+
+        return Gate::allows("update", $product);
     }
 
     protected function failedValidation(Validator $validator)
