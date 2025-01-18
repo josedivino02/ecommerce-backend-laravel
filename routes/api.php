@@ -17,6 +17,9 @@ Route::middleware([JwtAuthenticationMiddleware::class, "throttle:api"])->group(f
 
     Route::prefix("products")->middleware(IsAdminMiddleware::class)->group(function () {
         Route::post("/", [Product\StoreController::class, "store"])->name("products.store");
+        Route::get("/", [Product\IndexController::class, "index"])->name("products.index");
+        Route::put("/{product}/update", [Product\UpdateController::class, "update"])->name("products.update");
+        Route::delete("/{product}/delete", [Product\DeleteController::class, "delete"])->name("products.delete");
     });
 
     Route::prefix("categories")->middleware(IsAdminMiddleware::class)->group(function () {
