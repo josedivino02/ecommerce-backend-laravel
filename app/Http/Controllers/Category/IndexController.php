@@ -4,18 +4,20 @@ namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryIndexResource;
-use App\Models\Category;
+use App\Services\Category\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class IndexController extends Controller
 {
-    public function index(Request $request)
+    public function __construct(private CategoryService $categoryService)
     {
-        $category = Category::query()
-            ->status()
-            ->with("subCategories")
-            ->filter($request->all())
-            ->paginate(10);
+    }
+
+    public function index(Request $request): AnonymousResourceCollection
+    {
+        $category = $this->categoryService
+            ->listPaginated($request->all());
 
         return CategoryIndexResource::collection($category);
     }

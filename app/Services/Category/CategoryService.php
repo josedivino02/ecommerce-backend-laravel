@@ -16,6 +16,16 @@ class CategoryService
     {
         $data['slug'] = Str::slug($data['name']);
 
-        return $this->categoryRepository->create($data);
+        return $this->categoryRepository
+            ->create($data);
+    }
+
+    public function listPaginated(array $params = [], int $perPage = 10): Category
+    {
+        return $this->categoryRepository
+            ->listPaginated(
+                $params,
+                $perPage
+            );
     }
 }
