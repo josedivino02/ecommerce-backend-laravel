@@ -2,25 +2,21 @@
 
 namespace App\Http\Controllers\Category;
 
-use App\Enums\CategoryStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\{StoreCategoryRequest};
 use App\Http\Resources\CategoryResource;
-use App\Models\Category;
-use Illuminate\Support\Str;
+use App\Services\Category\CategoryService;
 
 class StoreController extends Controller
 {
-    public function store(StoreCategoryRequest $request)
+    public function __construct(protected CategoryService $categoryService)
     {
-        $category = Category::create([
-            "uuid"        => Str::uuid(),
-            "name"        => $request->name,
-            "slug"        => Str::slug($request->name),
-            "sub"         => $request->subcategory,
-            "description" => $request->description,
-            "status"      => CategoryStatus::ACTIVE,
-        ]);
+    }
+
+    public function store(StoreCategoryRequest $request): CategoryResource
+    {
+        $category = $this->categoryService
+            ->create($request->validated());
 
         return CategoryResource::make($category);
     }
