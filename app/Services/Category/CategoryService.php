@@ -28,4 +28,22 @@ class CategoryService
                 $perPage
             );
     }
+
+    public function update(Category $category, array $data): Category
+    {
+        if (isset($data['name'])) {
+            $data['slug'] = Str::slug($data['name']);
+        }
+
+        return $this->categoryRepository
+            ->update(
+                $category,
+                $data
+            );
+    }
+
+    public function delete(Category $category): bool
+    {
+        return $this->categoryRepository->delete($category);
+    }
 }
