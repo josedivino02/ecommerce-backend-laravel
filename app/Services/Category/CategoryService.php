@@ -5,6 +5,7 @@ namespace App\Services\Category;
 use App\Enums\CategoryStatus;
 use App\Models\Category;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 
 class CategoryService
@@ -28,7 +29,7 @@ class CategoryService
             ->create($data);
     }
 
-    public function listPaginated(array $params = [], int $perPage = 10): Category
+    public function listPaginated(array $params = [], int $perPage = 10): LengthAwarePaginator
     {
         return $this->categoryRepository
             ->listPaginated(

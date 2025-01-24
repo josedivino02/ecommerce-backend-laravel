@@ -3,6 +3,7 @@
 namespace App\Repositories\Category;
 
 use App\Models\Category;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
@@ -11,7 +12,7 @@ class CategoryRepository implements CategoryRepositoryInterface
         return Category::create($data);
     }
 
-    public function listPaginated(?array $params = [], ?int $perPage = 10): Category
+    public function listPaginated(?array $params = [], ?int $perPage = 10): LengthAwarePaginator
     {
         return Category::query()
             ->status()
