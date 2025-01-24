@@ -23,6 +23,7 @@ class UpdateController extends Controller
                     "name",
                     "description",
                     "status",
+                    "subcategory",
                 ])
             );
 

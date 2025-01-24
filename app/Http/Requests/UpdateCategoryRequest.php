@@ -35,7 +35,7 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             "category"    => ["required", new ValidCategoryForUpdated($this->input("status"))],
-            "name"        => ["required", "string", "unique:categories,name", "min:1", "max:255"],
+            "name"        => ["nullable", "string", "unique:categories,name", "min:1", "max:255"],
             "description" => ["nullable", "string", "min:1"],
             "status"      => ["nullable", new ValidCategoryStatus()],
             "subcategory" => ["nullable", "integer", new SubCategoryExists(), new ValidCategoryHierarchy($this->route()->category)],

@@ -43,6 +43,11 @@ class CategoryService
             $data['slug'] = Str::slug($data['name']);
         }
 
+        if (isset($data["subcategory"])) {
+            $data['sub'] = $data['subcategory'];
+            unset($data['subcategory']);
+        }
+
         return $this->categoryRepository
             ->update(
                 $category,
