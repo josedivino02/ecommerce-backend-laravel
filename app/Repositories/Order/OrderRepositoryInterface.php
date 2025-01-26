@@ -10,4 +10,5 @@ interface OrderRepositoryInterface
     public function addItems(Order $order, array $data): OrderItem;
     public function cancelOrder(Order $order, array $data): bool;
     public function cancelItemsFromOrder(Order $order, array $data): bool;
+    public function updateTotalPrice(Order $order, float $price): bool;
 }

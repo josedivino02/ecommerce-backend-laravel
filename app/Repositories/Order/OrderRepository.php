@@ -27,4 +27,9 @@ class OrderRepository implements OrderRepositoryInterface
     {
         return $order->orderItems()->update($data);
     }
+
+    public function updateTotalPrice(Order $order, float $price): bool
+    {
+        return $order->update(["total_price" => $price]);
+    }
 }
