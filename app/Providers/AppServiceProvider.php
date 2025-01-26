@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Contracts\Services\AuthServiceInterface;
 use App\Repositories\Category\{CategoryRepository, CategoryRepositoryInterface};
 use App\Repositories\Item\{ItemRepository, ItemRepositoryInterface};
 use App\Repositories\Order\{OrderRepository, OrderRepositoryInterface};
 use App\Repositories\Product\{ProductRepository, ProductRepositoryInterface};
+use App\Services\Auth\JwtAuthService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(OrderRepositoryInterface::class, OrderRepository::class);
         $this->app->bind(ItemRepositoryInterface::class, ItemRepository::class);
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+        $this->app->bind(AuthServiceInterface::class, JwtAuthService::class);
     }
 
     public function boot(): void
