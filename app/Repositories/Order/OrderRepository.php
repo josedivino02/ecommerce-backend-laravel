@@ -17,4 +17,14 @@ class OrderRepository implements OrderRepositoryInterface
         return $order->orderItems()
             ->create($data);
     }
+
+    public function cancelOrder(Order $order, array $data): bool
+    {
+        return $order->update($data);
+    }
+
+    public function cancelItemsFromOrder(Order $order, array $data): bool
+    {
+        return $order->orderItems()->update($data);
+    }
 }
