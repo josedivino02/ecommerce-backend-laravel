@@ -8,7 +8,7 @@ use App\Repositories\Order\OrderRepositoryInterface;
 
 use Illuminate\Support\Str;
 
-class OrderService
+class CreateOrderService
 {
     public function __construct(protected OrderRepositoryInterface $orderRepository)
     {

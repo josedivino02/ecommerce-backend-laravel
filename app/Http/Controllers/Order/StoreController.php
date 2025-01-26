@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Order;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Resources\OrderResource;
-use App\Services\Order\OrderService;
+use App\Services\Order\CreateOrderService;
 
 class StoreController extends Controller
 {
-    public function __construct(protected OrderService $orderService)
+    public function __construct(protected CreateOrderService $orderService)
     {
     }
 
