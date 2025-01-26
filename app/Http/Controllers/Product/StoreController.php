@@ -2,28 +2,20 @@
 
 namespace App\Http\Controllers\Product;
 
-use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\ProductResource;
-use Illuminate\Support\Str;
+use App\Services\Product\CreateProductService;
 
 class StoreController extends Controller
 {
+    public function __construct(protected CreateProductService $productService)
+    {
+    }
+
     public function store(StoreProductRequest $request)
     {
-        $product = user()->products()
-            ->create([
-                "uuid"        => Str::uuid(),
-                "name"        => $request->name,
-                "description" => $request->description,
-                "price"       => $request->price,
-                "stock"       => $request->stock,
-                "sku"         => $request->sku,
-                "image_url"   => $request->image_url,
-                "category_id" => $request->category,
-                "status"      => ProductStatus::ACTIVE,
-            ]);
+        $product = $this->productService->create($request->validated());
 
         return ProductResource::make($product);
 

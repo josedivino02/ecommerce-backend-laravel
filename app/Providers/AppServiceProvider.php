@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Repositories\Category\{CategoryRepository, CategoryRepositoryInterface};
 use App\Repositories\Item\{ItemRepository, ItemRepositoryInterface};
 use App\Repositories\Order\{OrderRepository, OrderRepositoryInterface};
+use App\Repositories\Product\{ProductRepository, ProductRepositoryInterface};
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(OrderRepositoryInterface::class, OrderRepository::class);
         $this->app->bind(ItemRepositoryInterface::class, ItemRepository::class);
+        $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
     }
 
     public function boot(): void

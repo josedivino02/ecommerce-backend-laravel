@@ -4,18 +4,20 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductIndexResource;
-use App\Models\Product;
+use App\Services\Product\ListPaginatedProductService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class IndexController extends Controller
 {
-    public function index(Request $request)
+    public function __construct(protected ListPaginatedProductService $productService)
     {
-        $product = Product::query()
-            ->status()
-            ->with("category")
-            ->filter($request->all())
-            ->paginate(10);
+    }
+
+    public function index(Request $request): AnonymousResourceCollection
+    {
+        $product = $this->productService
+            ->listPaginated($request->all());
 
         return ProductIndexResource::collection($product);
     }

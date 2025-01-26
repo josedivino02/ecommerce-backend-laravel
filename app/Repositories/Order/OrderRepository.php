@@ -25,7 +25,8 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function cancelItemsFromOrder(Order $order, array $data): bool
     {
-        return $order->orderItems()->update($data);
+        return $order->orderItems()
+            ->update($data);
     }
 
     public function updateTotalPrice(Order $order, float $price): bool
