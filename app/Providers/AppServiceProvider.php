@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Repositories\Category\{CategoryRepository, CategoryRepositoryInterface};
+use App\Repositories\Order\{OrderRepository, OrderRepositoryInterface};
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
@@ -11,6 +12,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
+        $this->app->bind(OrderRepositoryInterface::class, OrderRepository::class);
     }
 
     public function boot(): void
