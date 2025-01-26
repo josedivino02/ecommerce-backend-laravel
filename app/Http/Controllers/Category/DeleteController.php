@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeleteCategoryRequest;
 use App\Models\Category;
-use App\Services\Category\CategoryService;
+use App\Services\Category\DeleteCategoryService;
 
 class DeleteController extends Controller
 {
-    public function __construct(private CategoryService $categoryService)
+    public function __construct(private DeleteCategoryService $categoryService)
     {
     }
 

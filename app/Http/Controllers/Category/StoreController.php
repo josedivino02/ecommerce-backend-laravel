@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\{StoreCategoryRequest};
+use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Resources\CategoryResource;
-use App\Services\Category\CategoryService;
+use App\Services\Category\CreateCategoryService;
 
 class StoreController extends Controller
 {
-    public function __construct(protected CategoryService $categoryService)
+    public function __construct(protected CreateCategoryService $categoryService)
     {
     }
 

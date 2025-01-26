@@ -12,7 +12,7 @@ class CancelOrderService
     {
     }
 
-    public function cancel(Order $order)
+    public function cancel(Order $order): bool
     {
         $data = [
             "status"          => OrderStatus::CANCELED,
