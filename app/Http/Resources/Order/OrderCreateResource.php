@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Order;
 
+use App\Http\Resources\OrderItem\OrderItemsCreateResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
-class OrderResource extends JsonResource
+class OrderCreateResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
         return [
             "message" => "Order created successfully",
+            "statusCode" => Response::HTTP_CREATED,
             "data"    => [
                 "uuid"              => $this->uuid,
                 "verification_code" => $this->verification_code,
@@ -23,7 +26,7 @@ class OrderResource extends JsonResource
                 "discount"          => $this->discount,
                 "total_price"       => $this->total_price,
                 "status"            => $this->status,
-                "items"             => OrderItemsResource::collection($this->orderItems),
+                "items"             => OrderItemsCreateResource::collection($this->orderItems),
                 "created_by"        => [
                     "uuid"  => $this->user->uuid,
                     "email" => $this->user->email,

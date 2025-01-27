@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Resources\CategoryResource;
+use App\Http\Resources\Category\CategoryCreateResource;
 use App\Services\Category\CreateCategoryService;
 
 class StoreController extends Controller
@@ -13,12 +13,12 @@ class StoreController extends Controller
     {
     }
 
-    public function store(StoreCategoryRequest $request): CategoryResource
+    public function store(StoreCategoryRequest $request): CategoryCreateResource
     {
         $category = $this->categoryService
             ->create($request->validated());
 
-        return CategoryResource::make($category);
+        return CategoryCreateResource::make($category);
     }
 
 }

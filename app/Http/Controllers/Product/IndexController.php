@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductIndexResource;
+use App\Http\Resources\Product\ProductIndexResource;
 use App\Services\Product\ListPaginatedProductService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

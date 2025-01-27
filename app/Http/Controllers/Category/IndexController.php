@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoryIndexResource;
+use App\Http\Resources\Category\CategoryIndexResource;
 use App\Services\Category\ListPaginatedCategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

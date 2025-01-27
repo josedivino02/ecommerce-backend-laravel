@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\Product\ProductCreateResource;
 use App\Services\Product\CreateProductService;
 
 class StoreController extends Controller
@@ -17,7 +17,7 @@ class StoreController extends Controller
     {
         $product = $this->productService->create($request->validated());
 
-        return ProductResource::make($product);
+        return ProductCreateResource::make($product);
 
     }
 }
