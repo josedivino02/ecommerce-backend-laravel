@@ -11,4 +11,14 @@ class JwtAuthService implements AuthServiceInterface
     {
         return JWTAuth::attempt($credentials);
     }
+
+    public function logout(): JWTAuth
+    {
+        return JWTAuth::invalidate(JWTAuth::getToken());
+    }
+
+    public function authenticate(): JWTAuth
+    {
+        return JWTAuth::parseToken()->authenticate();
+    }
 }

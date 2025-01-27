@@ -3,20 +3,24 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\Auth\AuthService;
 use Illuminate\Http\Response;
 use Tymon\JWTAuth\Exceptions\{JWTException, TokenExpiredException, TokenInvalidException};
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LogoutController extends Controller
 {
+    public function __construct(protected AuthService $authService)
+    {
+    }
+
     public function logout()
     {
         try {
-            if (!JWTAuth::parseToken()->authenticate()) {
+            if (!$this->authService->authenticate()) {
                 return response()->json(['error' => 'Token is invalid or expired!'], Response::HTTP_UNAUTHORIZED);
             }
 
-            JWTAuth::invalidate(JWTAuth::getToken());
+            $this->authService->logout();
 
             return response()->json(["message" => "Successful logout!"], Response::HTTP_OK);
         } catch (TokenInvalidException $e) {

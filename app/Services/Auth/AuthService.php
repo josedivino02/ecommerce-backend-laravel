@@ -21,6 +21,20 @@ class AuthService
         return $this->payLoad($token);
     }
 
+    public function authenticate(): bool
+    {
+        if (!$this->authService->authenticate()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function logout(): void
+    {
+        $this->authService->logout();
+    }
+
     private function payLoad(string $token): array
     {
         $user = user();
