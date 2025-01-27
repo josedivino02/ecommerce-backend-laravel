@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use App\Models\Category;
 use App\Rules\{SubCategoryExists, ValidCategoryForUpdated, ValidCategoryHierarchy, ValidCategoryStatus};
-use Illuminate\Contracts\Validation\Validator;
+use App\Trait\FailValidate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Gate;
-use Symfony\Component\HttpFoundation\Response;
 
 class UpdateCategoryRequest extends FormRequest
 {
+    use FailValidate;
+
     protected function prepareForValidation(): void
     {
         $this->merge([
@@ -22,13 +22,6 @@ class UpdateCategoryRequest extends FormRequest
     public function authorize(): bool
     {
         return Gate::allows("update", Category::class);
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            "errors" => $validator->errors(),
-        ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 
     public function rules(): array

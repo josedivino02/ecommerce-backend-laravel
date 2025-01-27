@@ -3,14 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Rules\{ValidItemForCancellation, ValidOrderForCancellation};
-use Illuminate\Contracts\Validation\Validator;
+use App\Trait\FailValidate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Gate;
-use Symfony\Component\HttpFoundation\Response;
 
 class CancelOrderItemRequest extends FormRequest
 {
+    use FailValidate;
+
     protected function prepareForValidation(): void
     {
         $this->merge([
@@ -25,14 +25,6 @@ class CancelOrderItemRequest extends FormRequest
         $item  = $this->route()->item;
 
         return Gate::allows("cancelItem", [$order, $item]);
-    }
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json(
-            ["errors" => $validator->errors(),
-            ],
-            Response::HTTP_UNPROCESSABLE_ENTITY
-        ));
     }
 
     public function rules(): array

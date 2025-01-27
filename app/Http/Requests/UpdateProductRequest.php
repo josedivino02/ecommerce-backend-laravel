@@ -3,14 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Rules\{CategoryExists, ValidProductForUpdated, ValidProductStatus};
-use Illuminate\Contracts\Validation\Validator;
+use App\Trait\FailValidate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Gate;
-use Symfony\Component\HttpFoundation\Response;
 
 class UpdateProductRequest extends FormRequest
 {
+    use FailValidate;
+
     protected function prepareForValidation(): void
     {
         $this->merge([
@@ -23,13 +23,6 @@ class UpdateProductRequest extends FormRequest
         $product = $this->route()->product;
 
         return Gate::allows("update", $product);
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            "errors" => $validator->errors(),
-        ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 
     public function rules(): array
