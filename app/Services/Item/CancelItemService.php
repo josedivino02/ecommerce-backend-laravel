@@ -2,7 +2,7 @@
 
 namespace App\Services\Item;
 
-use App\Enums\OrderItemsStatus;
+use App\Enums\OrderItem\OrderItemsStatus;
 use App\Models\{Order, OrderItem};
 use App\Repositories\Item\ItemRepositoryInterface;
 use App\Repositories\Order\{OrderRepositoryInterface};

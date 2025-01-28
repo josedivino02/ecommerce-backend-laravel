@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Enums\CategoryStatus;
+use App\Enums\Category\CategoryStatus;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 

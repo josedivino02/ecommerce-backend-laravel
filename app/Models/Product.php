@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\ProductStatus;
+use App\Enums\Product\ProductStatus;
 use App\Trait\{Filterable, RouteBindingResolver};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};

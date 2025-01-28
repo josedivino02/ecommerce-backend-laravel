@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Enums\PaymentMethod;
+use App\Enums\Payment\PaymentMethod;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 

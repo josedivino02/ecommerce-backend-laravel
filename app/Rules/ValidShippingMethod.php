@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Enums\ShippingMethod;
+use App\Enums\Shipping\ShippingMethod;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 

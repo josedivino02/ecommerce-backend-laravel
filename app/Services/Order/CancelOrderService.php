@@ -2,7 +2,10 @@
 
 namespace App\Services\Order;
 
-use App\Enums\{OrderItemsStatus, OrderStatus, PaymentStatus, ShippingStatus};
+use App\Enums\Order\OrderStatus;
+use App\Enums\OrderItem\OrderItemsStatus;
+use App\Enums\Payment\PaymentStatus;
+use App\Enums\Shipping\ShippingStatus;
 use App\Models\Order;
 use App\Repositories\Order\OrderRepositoryInterface;
 

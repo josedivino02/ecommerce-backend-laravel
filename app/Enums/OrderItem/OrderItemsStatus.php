@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Enums;
+namespace App\Enums\OrderItem;
 
-enum PaymentStatus: string
+enum OrderItemsStatus: string
 {
     case PENDING    = 'pending';
-    case COMPLETED  = 'completed';
-    case FAILED     = 'failed';
-    case REFUNDED   = 'refunded';
-    case CANCELED   = 'canceled';
     case PROCESSING = 'processing';
+    case COMPLETED  = 'completed';
+    case CANCELED   = 'canceled';
 
     public static function values(): array
     {

@@ -2,7 +2,7 @@
 
 namespace App\Services\Category;
 
-use App\Enums\CategoryStatus;
+use App\Enums\Category\CategoryStatus;
 use App\Models\Category;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Support\Str;

@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Enums\ProductStatus;
+use App\Enums\Product\ProductStatus;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
