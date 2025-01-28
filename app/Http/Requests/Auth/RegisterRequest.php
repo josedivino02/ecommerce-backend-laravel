@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Rules\ValidIsAdmin;
+use App\Rules\Auth\ValidIsAdmin;
 use App\Trait\FailValidate;
 use Illuminate\Foundation\Http\FormRequest;
 

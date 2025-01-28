@@ -3,7 +3,10 @@
 namespace App\Http\Requests\Category;
 
 use App\Models\Category;
-use App\Rules\{SubCategoryExists, ValidCategoryForUpdated, ValidCategoryHierarchy, ValidCategoryStatus};
+use App\Rules\Category\SubCategoryExists;
+use App\Rules\Category\ValidCategoryForUpdated;
+use App\Rules\Category\ValidCategoryHierarchy;
+use App\Rules\Category\ValidCategoryStatus;
 use App\Trait\FailValidate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;

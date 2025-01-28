@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Product;
 
 use App\Models\Product;
-use App\Rules\SubCategoryExists;
+use App\Rules\Category\SubCategoryExists;
 use App\Trait\FailValidate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;

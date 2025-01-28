@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Category;
 
 use App\Models\Category;
-use App\Rules\ValidCategoryForDelete;
+use App\Rules\Category\ValidCategoryForDelete;
 use App\Trait\FailValidate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;

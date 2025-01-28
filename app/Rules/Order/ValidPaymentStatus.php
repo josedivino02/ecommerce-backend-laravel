@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rules;
+namespace App\Rules\Order;
 
 use App\Enums\Payment\PaymentStatus;
 use Closure;

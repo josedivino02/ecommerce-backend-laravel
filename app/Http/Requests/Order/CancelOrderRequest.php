@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Order;
 
-use App\Rules\ValidOrderForCancellation;
+use App\Rules\Order\ValidOrderForCancellation;
 use App\Trait\FailValidate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;

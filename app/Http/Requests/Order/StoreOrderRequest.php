@@ -3,7 +3,9 @@
 namespace App\Http\Requests\Order;
 
 use App\Models\Order;
-use App\Rules\{AtLeastOneItem, ProductExists, QuantityProduct, ValidPaymentMethod, ValidShippingCost, ValidShippingMethod};
+use App\Rules\Order\{AtLeastOneItem, ValidPaymentMethod, ValidShippingCost, ValidShippingMethod};
+use App\Rules\Product\ProductExists;
+use App\Rules\Product\QuantityProduct;
 use App\Trait\FailValidate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;

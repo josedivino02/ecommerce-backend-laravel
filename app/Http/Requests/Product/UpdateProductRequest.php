@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Product;
 
-use App\Rules\{CategoryExists, ValidProductForUpdated, ValidProductStatus};
+use App\Rules\Category\CategoryExists;
+use App\Rules\Product\ValidProductForUpdated;
+use App\Rules\Product\ValidProductStatus;
 use App\Trait\FailValidate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
