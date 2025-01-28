@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\OrderItem;
 
 use App\Rules\{ValidItemForCancellation, ValidOrderForCancellation};
 use App\Trait\FailValidate;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Product;
 
 use App\Rules\{CategoryExists, ValidProductForUpdated, ValidProductStatus};
 use App\Trait\FailValidate;

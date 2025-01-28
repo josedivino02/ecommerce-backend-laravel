@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DeleteCategoryRequest;
+use App\Http\Requests\Category\DeleteCategoryRequest;
 use App\Models\Category;
 use App\Services\Category\DeleteCategoryService;
 

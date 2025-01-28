@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\OrderItem;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CancelOrderItemRequest;
+use App\Http\Requests\OrderItem\CancelOrderItemRequest;
 use App\Models\{Order, OrderItem};
 use App\Services\Item\CancelItemService;
 use Symfony\Component\HttpFoundation\Response;

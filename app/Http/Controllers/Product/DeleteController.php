@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DeleteProductRequest;
+use App\Http\Requests\Product\DeleteProductRequest;
 use App\Models\Product;
 use App\Services\Product\DeleteProductService;
 

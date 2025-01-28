@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Resources\Product\ProductCreateResource;
 use App\Services\Product\CreateProductService;
 
