@@ -2,55 +2,36 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Enums\{OrderItemsStatus, OrderStatus, PaymentStatus, ShippingStatus};
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreOrderRequest;
-use App\Http\Resources\OrderResource;
-use Illuminate\Support\Str;
+use App\Http\Requests\Order\StoreOrderRequest;
+use App\Http\Resources\Order\OrderCreateResource;
+use App\Services\Order\CreateOrderService;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreController extends Controller
 {
-    public function store(StoreOrderRequest $request)
+    public function __construct(protected CreateOrderService $orderService)
     {
-        $totalPrice = $this->calculateTotalPrice($request);
-
-        $order = user()->orders()
-            ->create([
-                "uuid"              => Str::uuid(),
-                "shipping_address"  => $request->shipping_address,
-                "billing_address"   => $request->billing_address,
-                "payment_method"    => $request->payment_method,
-                "payment_status"    => PaymentStatus::PENDING,
-                "shipping_method"   => $request->shipping_method,
-                "shipping_status"   => ShippingStatus::PROCESSING,
-                "shipping_costs_id" => $request->shipping_costs_id,
-                "total_price"       => $totalPrice,
-                "discount"          => $request->discount,
-                "verification_code" => strtoupper(Str::random(10)),
-                "status"            => OrderStatus::PENDING,
-            ]);
-
-        collect($request->items)->each(function ($item) use ($order) {
-            $order->orderItems()->create([
-                "uuid"        => Str::uuid(),
-                "product_id"  => $item["product_id"],
-                "quantity"    => $item["quantity"],
-                "unit_price"  => $item["unit_price"],
-                "total_price" => $item["unit_price"] * $item["quantity"],
-                "tracking"    => now()->timestamp . rand(100, 999),
-                "status"      => OrderItemsStatus::PENDING,
-            ]);
-        });
-
-        return OrderResource::make($order);
     }
 
-    private function calculateTotalPrice(StoreOrderRequest $request)
+    public function __invoke(StoreOrderRequest $request): OrderCreateResource|JsonResponse
     {
-        $totalPrice = collect($request->items)->reduce(function ($acc, $item) {
-            return $acc + ($item["unit_price"] * $item["quantity"]);
-        }, 0);
+        try {
+            $order = $this->orderService
+                ->create($request->validated());
 
-        return $totalPrice - $request->discount;
+            return $this->successResponse(
+                message: "Order created successfully",
+                status: Response::HTTP_CREATED,
+                data: OrderCreateResource::make($order),
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                message :"Unexpected error",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
+
 }

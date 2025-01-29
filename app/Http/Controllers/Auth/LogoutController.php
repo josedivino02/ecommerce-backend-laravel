@@ -3,28 +3,49 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Response;
+use App\Services\Auth\AuthService;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Exceptions\{JWTException, TokenExpiredException, TokenInvalidException};
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LogoutController extends Controller
 {
-    public function logout()
+    public function __construct(protected AuthService $authService)
+    {
+    }
+
+    public function __invoke(): JsonResponse
     {
         try {
-            if (!JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['error' => 'Token is invalid or expired!'], Response::HTTP_UNAUTHORIZED);
+            if (!$this->authService->authenticate()) {
+                return $this->errorResponse(
+                    message :"Token is invalid or expired!",
+                    status: Response::HTTP_UNAUTHORIZED
+                );
             }
 
-            JWTAuth::invalidate(JWTAuth::getToken());
+            $this->authService
+                ->logout();
 
-            return response()->json(["message" => "Successful logout!"], Response::HTTP_OK);
+                return $this->successResponse(
+                    message: "Successful logout!",
+                    status: Response::HTTP_OK
+                );
         } catch (TokenInvalidException $e) {
-            return response()->json(['error' => 'Token is invalid!'], Response::HTTP_UNAUTHORIZED);
+            return $this->errorResponse(
+                message :"Token is invalid!",
+                status: Response::HTTP_UNAUTHORIZED
+            );
         } catch (TokenExpiredException $e) {
-            return response()->json(["message" => "Token has already expired!"], Response::HTTP_UNAUTHORIZED);
+            return $this->errorResponse(
+                message :"Token has already expired!",
+                status: Response::HTTP_UNAUTHORIZED
+            );
         } catch (JWTException $e) {
-            return response()->json(["error" => "Unable to logout, token not provided!"], Response::HTTP_BAD_REQUEST);
+            return $this->errorResponse(
+                message :"Unable to logout, token not provided!",
+                status: Response::HTTP_BAD_REQUEST
+            );
         }
     }
 }

@@ -12,7 +12,9 @@ trait RouteBindingResolver
 
         if (!$model) {
             abort(response()->json([
-                "error" => "The " . class_basename($this) . " was not found",
+                "status" => "error",
+                "message" => "Not found",
+                "errors" => "The " . class_basename($this) . " was not found",
             ], Response::HTTP_NOT_FOUND));
         }
 

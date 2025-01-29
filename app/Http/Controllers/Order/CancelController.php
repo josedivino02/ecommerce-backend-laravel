@@ -2,37 +2,40 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Enums\{OrderItemsStatus, OrderStatus, PaymentStatus, ShippingStatus};
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CancelOrderRequest;
+use App\Http\Requests\Order\CancelOrderRequest;
 use App\Models\Order;
-use Symfony\Component\HttpFoundation\{Response};
+use App\Services\Order\CancelOrderService;
+use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 
 class CancelController extends Controller
 {
-    public function cancel(CancelOrderRequest $request, Order $order)
+    public function __construct(protected CancelOrderService $orderService)
+    {
+    }
+
+    public function __invoke(CancelOrderRequest $request, Order $order): JsonResponse
     {
         try {
-            $order->update([
-                "status"          => OrderStatus::CANCELED,
-                "payment_status"  => PaymentStatus::CANCELED,
-                "shipping_status" => ShippingStatus::CANCELED,
-            ]);
+            $canceled = $this->orderService
+                ->cancel($order);
 
-            $order->orderItems()
-                ->update([
-                    "status" => OrderItemsStatus::CANCELED,
-                ]);
+            if (!$canceled) {
+                return $this->errorResponse(
+                    message :"The order and the respective items related to the order no have been canceled",
+                    status: Response::HTTP_BAD_REQUEST
+                );
+            }
 
-            return response()->json(
-                [
-                    "success" => "The order and the respective items related to the order have been canceled",
-                ],
-                Response::HTTP_OK
+            return $this->successResponse(
+                message: "The order and the respective items related to the order have been canceled",
+                status: Response::HTTP_OK
             );
-
         } catch (\Exception $e) {
-            return response()->json(["error" => "Unexpected error"], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse(
+                message :"Unexpected error",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
     }

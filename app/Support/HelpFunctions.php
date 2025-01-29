@@ -27,7 +27,9 @@ function genericRateLimiter(
             ->response(function () use ($errorMessage): JsonResponse {
                 return response()->json(
                     [
-                        "error" => $errorMessage,
+                        "status" => "error",
+                        "message" => "Limiter exceeded",
+                        "errors" => $errorMessage,
                     ],
                     Response::HTTP_TOO_MANY_REQUESTS
                 );
