@@ -4,7 +4,7 @@ namespace App\Services\Product;
 
 use App\Enums\Product\ProductStatus;
 use App\Models\Product;
-use App\Repositories\Product\ProductRepositoryInterface;
+use App\Contracts\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Support\Str;
 
 class CreateProductService

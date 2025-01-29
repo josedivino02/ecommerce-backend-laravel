@@ -4,8 +4,8 @@ namespace App\Services\Item;
 
 use App\Enums\OrderItem\OrderItemsStatus;
 use App\Models\{Order, OrderItem};
-use App\Repositories\Item\ItemRepositoryInterface;
-use App\Repositories\Order\{OrderRepositoryInterface};
+use App\Contracts\Repositories\OrderItem\ItemRepositoryInterface;
+use App\Contracts\Repositories\Order\{OrderRepositoryInterface};
 
 class CancelItemService
 {

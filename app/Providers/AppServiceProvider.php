@@ -2,12 +2,17 @@
 
 namespace App\Providers;
 
-use App\Contracts\Services\AuthServiceInterface;
-use App\Repositories\Category\{CategoryRepository, CategoryRepositoryInterface};
-use App\Repositories\Item\{ItemRepository, ItemRepositoryInterface};
-use App\Repositories\Order\{OrderRepository, OrderRepositoryInterface};
-use App\Repositories\Product\{ProductRepository, ProductRepositoryInterface};
-use App\Repositories\User\{UserRepository, UserRepositoryInterface};
+use App\Contracts\Repositories\Category\CategoryRepositoryInterface;
+use App\Contracts\Repositories\OrderItem\ItemRepositoryInterface;
+use App\Contracts\Repositories\Order\OrderRepositoryInterface;
+use App\Contracts\Repositories\Product\ProductRepositoryInterface;
+use App\Contracts\Repositories\User\UserRepositoryInterface;
+use App\Contracts\Services\Auth\AuthServiceInterface;
+use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Item\ItemRepository;
+use App\Repositories\Order\OrderRepository;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\User\UserRepository;
 use App\Services\Auth\JwtAuthService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;

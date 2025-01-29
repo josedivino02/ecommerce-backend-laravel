@@ -2,7 +2,7 @@
 
 namespace App\Services\Product;
 
-use App\Repositories\Product\ProductRepositoryInterface;
+use App\Contracts\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ListPaginatedProductService

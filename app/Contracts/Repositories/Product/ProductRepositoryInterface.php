@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Product;
+namespace App\Contracts\Repositories\Product;
 
 use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

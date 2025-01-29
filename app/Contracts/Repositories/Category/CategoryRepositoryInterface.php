@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Category;
+namespace App\Contracts\Repositories\Category;
 
 use App\Models\Category;
 use Illuminate\Pagination\LengthAwarePaginator;

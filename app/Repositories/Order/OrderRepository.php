@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Order;
 
+use App\Contracts\Repositories\Order\OrderRepositoryInterface;
 use App\Models\{Order, OrderItem};
 
 class OrderRepository implements OrderRepositoryInterface

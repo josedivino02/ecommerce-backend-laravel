@@ -2,9 +2,9 @@
 
 namespace App\Services\Category;
 
+use App\Contracts\Repositories\Category\CategoryRepositoryInterface;
 use App\Enums\Category\CategoryStatus;
 use App\Models\Category;
-use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Support\Str;
 
 class CreateCategoryService

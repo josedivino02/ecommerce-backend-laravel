@@ -3,7 +3,7 @@
 namespace App\Services\Product;
 
 use App\Models\{Product};
-use App\Repositories\Product\ProductRepositoryInterface;
+use App\Contracts\Repositories\Product\ProductRepositoryInterface;
 
 class DeleteProductService
 {

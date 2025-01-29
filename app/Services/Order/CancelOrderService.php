@@ -7,7 +7,7 @@ use App\Enums\OrderItem\OrderItemsStatus;
 use App\Enums\Payment\PaymentStatus;
 use App\Enums\Shipping\ShippingStatus;
 use App\Models\Order;
-use App\Repositories\Order\OrderRepositoryInterface;
+use App\Contracts\Repositories\Order\OrderRepositoryInterface;
 
 class CancelOrderService
 {

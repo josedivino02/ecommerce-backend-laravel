@@ -2,7 +2,7 @@
 
 namespace App\Services\Category;
 
-use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Contracts\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ListPaginatedCategoryService

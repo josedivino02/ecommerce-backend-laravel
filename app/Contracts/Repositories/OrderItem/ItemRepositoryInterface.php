@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Item;
+namespace App\Contracts\Repositories\OrderItem;
 
 use App\Models\{OrderItem};
 
