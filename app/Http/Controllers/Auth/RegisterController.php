@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\User\CreateUserService;
+use Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
@@ -13,14 +15,22 @@ class RegisterController extends Controller
     {
     }
 
-    public function register(RegisterRequest $request)
+    public function __invoke(RegisterRequest $request): JsonResponse
     {
-        $this->userService
-            ->create($request->validated());
+        try {
+            $this->userService
+                ->create($request->validated());
 
-        return response()->json(
-            ["message" => "User successfully registered"],
-            Response::HTTP_CREATED
-        );
+
+            return $this->successResponse(
+                message: "User successfully registered",
+                status: Response::HTTP_CREATED
+            );
+        }catch(Exception $e) {
+            return $this->errorResponse(
+                message :"Unexpected error",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 }

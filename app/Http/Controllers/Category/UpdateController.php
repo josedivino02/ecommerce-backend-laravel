@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Services\Category\UpdateCategoryService;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class UpdateController extends Controller
@@ -14,8 +15,9 @@ class UpdateController extends Controller
     {
     }
 
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function __invoke(UpdateCategoryRequest $request, Category $category): JsonResponse
     {
+        try {
         $this->categoryService
             ->update(
                 $category,
@@ -27,8 +29,15 @@ class UpdateController extends Controller
                 ])
             );
 
-        return response()->json([
-            "success" => "The Category successfully updated",
-        ], Response::HTTP_OK);
+            return $this->successResponse(
+                message: "The Category successfully updated",
+                status: Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                message :"Unexpected error",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Contracts\Services;
 
-use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Models\User;
 
 interface AuthServiceInterface
 {
     public function attempt(array $credentials): ?string;
-    public function logout(): JWTAuth;
-    public function authenticate(): JWTAuth;
+    public function logout(): bool;
+    public function authenticate(): User|null;
 }

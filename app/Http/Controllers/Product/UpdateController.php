@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Product;
 use App\Services\Product\UpdateProductService;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class UpdateController extends Controller
@@ -14,26 +15,34 @@ class UpdateController extends Controller
     {
     }
 
-    public function update(UpdateProductRequest $request, Product $product)
+    public function __invoke(UpdateProductRequest $request, Product $product): JsonResponse
     {
-        $this->productService->update(
-            $product,
-            $request->only(
-                [
-                    "name",
-                    "description",
-                    "price",
-                    "stock",
-                    "sku",
-                    "image_url",
-                    "status",
-                    "category_id",
-                ]
-            )
-        );
+        try {
+            $this->productService->update(
+                $product,
+                $request->only(
+                    [
+                        "name",
+                        "description",
+                        "price",
+                        "stock",
+                        "sku",
+                        "image_url",
+                        "status",
+                        "category_id",
+                    ]
+                )
+            );
 
-        return response()->json([
-            "success" => "The product successfully updated",
-        ], Response::HTTP_OK);
+            return $this->successResponse(
+                message: "The product successfully updated",
+                status: Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                message :"Unexpected error",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Services\Auth;
 
 use App\Contracts\Services\AuthServiceInterface;
+use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class JwtAuthService implements AuthServiceInterface
@@ -12,12 +13,18 @@ class JwtAuthService implements AuthServiceInterface
         return JWTAuth::attempt($credentials);
     }
 
-    public function logout(): JWTAuth
+    public function logout(): bool
     {
-        return JWTAuth::invalidate(JWTAuth::getToken());
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+
     }
 
-    public function authenticate(): JWTAuth
+    public function authenticate(): User|null
     {
         return JWTAuth::parseToken()->authenticate();
     }

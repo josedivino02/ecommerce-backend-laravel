@@ -7,6 +7,8 @@ use App\Http\Resources\Category\CategoryIndexResource;
 use App\Services\Category\ListPaginatedCategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends Controller
 {
@@ -14,11 +16,21 @@ class IndexController extends Controller
     {
     }
 
-    public function index(Request $request): AnonymousResourceCollection
+    public function __invoke(Request $request): AnonymousResourceCollection|JsonResponse
     {
-        $category = $this->categoryService
-            ->listPaginated($request->all());
+        try {
+            $category = $this->categoryService
+                ->listPaginated($request->all());
 
-        return CategoryIndexResource::collection($category);
+            return $this->successResponse(
+                status: Response::HTTP_OK,
+                data: CategoryIndexResource::collection($category)
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                message :"Unexpected error",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 }

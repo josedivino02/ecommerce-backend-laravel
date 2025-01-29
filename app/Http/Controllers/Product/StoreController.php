@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Resources\Product\ProductCreateResource;
 use App\Services\Product\CreateProductService;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreController extends Controller
 {
@@ -13,11 +15,22 @@ class StoreController extends Controller
     {
     }
 
-    public function store(StoreProductRequest $request)
+    public function __invoke(StoreProductRequest $request): ProductCreateResource|JsonResponse
     {
-        $product = $this->productService->create($request->validated());
+        try {
+            $product = $this->productService
+                ->create($request->validated());
 
-        return ProductCreateResource::make($product);
-
+            return $this->successResponse(
+                message: "Product created successfully",
+                status: Response::HTTP_CREATED,
+                data:ProductCreateResource::make($product)
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                message :"Unexpected error",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 }

@@ -7,6 +7,8 @@ use App\Http\Resources\Product\ProductIndexResource;
 use App\Services\Product\ListPaginatedProductService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends Controller
 {
@@ -14,11 +16,21 @@ class IndexController extends Controller
     {
     }
 
-    public function index(Request $request): AnonymousResourceCollection
+    public function __invoke(Request $request): AnonymousResourceCollection|JsonResponse
     {
-        $product = $this->productService
-            ->listPaginated($request->all());
+        try {
+            $product = $this->productService
+                ->listPaginated($request->all());
 
-        return ProductIndexResource::collection($product);
+            return $this->successResponse(
+                status: Response::HTTP_OK,
+                data: ProductIndexResource::collection($product)
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                message :"Unexpected error",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 }
