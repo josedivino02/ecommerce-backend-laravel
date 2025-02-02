@@ -2,14 +2,13 @@
 
 namespace App\Category\Http\Controllers;
 
-use App\Common\Http\Controllers\Controller;
 use App\Category\Http\Resources\CategoryIndexResource;
 use App\Category\Services\ListPaginatedCategoryService;
+use App\Common\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 
 class IndexController extends Controller
 {
@@ -23,10 +22,7 @@ class IndexController extends Controller
             $category = $this->categoryService
                 ->listPaginated($request->all());
 
-            return $this->successResponse(
-                status: Response::HTTP_OK,
-                data: CategoryIndexResource::collection($category)
-            );
+            return  CategoryIndexResource::collection($category);
         } catch (\Exception $e) {
             return $this->errorResponse(
                 message :"Unexpected error",

@@ -8,8 +8,7 @@ use App\Product\Services\ListPaginatedProductService;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 
 class IndexController extends Controller
 {
@@ -23,10 +22,7 @@ class IndexController extends Controller
             $product = $this->productService
                 ->listPaginated($request->all());
 
-            return $this->successResponse(
-                status: Response::HTTP_OK,
-                data: ProductIndexResource::collection($product)
-            );
+            return ProductIndexResource::collection($product);
         } catch (\Exception $e) {
             return $this->errorResponse(
                 message :"Unexpected error",
