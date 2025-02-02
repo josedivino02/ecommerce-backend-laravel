@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Product;
+use App\Product\Models\Product;
 use Illuminate\Database\Seeder;
+
 use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
