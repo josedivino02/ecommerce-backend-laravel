@@ -6,6 +6,7 @@ use App\Order\Contracts\Repositories\OrderRepositoryInterface;
 use App\Order\DTOs\CreateOrderDTO;
 use App\Order\Models\Order;
 use App\OrderItem\Models\OrderItem;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class OrderRepository implements OrderRepositoryInterface
 {
@@ -37,5 +38,14 @@ class OrderRepository implements OrderRepositoryInterface
     public function updateTotalPrice(Order $order, float $price): bool
     {
         return $order->update(["total_price" => $price]);
+    }
+
+    public function listPaginated(?array $params = [], ?int $perPage = 10): LengthAwarePaginator
+    {
+        return Order::query()
+            ->status()
+            ->with('orderItems')
+            ->filter($params)
+            ->paginate($perPage);
     }
 }

@@ -1,28 +1,27 @@
 <?php
 
-namespace App\Product\Http\Controllers;
+namespace App\Order\Http\Controllers;
 
 use App\Common\Http\Controllers\Controller;
-use App\Product\Http\Resources\ProductIndexResource;
-use App\Product\Services\ListPaginatedProductService;
-
-use Illuminate\Http\Request;
+use App\Order\Http\Resources\OrderIndexResource;
+use App\Order\Services\ListPaginatedOrderService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Symfony\Component\HttpFoundation\{JsonResponse, Response};
+use Illuminate\Http\{JsonResponse, Request};
+use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends Controller
 {
-    public function __construct(protected ListPaginatedProductService $productService)
+    public function __construct(protected ListPaginatedOrderService $orderService)
     {
     }
 
     public function __invoke(Request $request): AnonymousResourceCollection|JsonResponse
     {
         try {
-            $product = $this->productService
+            $orders = $this->orderService
                 ->listPaginated($request->all());
 
-            return ProductIndexResource::collection($product);
+            return OrderIndexResource::collection($orders);
         } catch (\Exception $e) {
             return $this->errorResponse(
                 message :"Unexpected error",
