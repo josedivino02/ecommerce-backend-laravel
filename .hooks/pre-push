@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Exibir mensagem de início
+echo "🔍 Rodando verificações antes do push..."
+
+# Rodar PHPStan (análise estática de código)
+echo "🚀 Rodando PHPStan..."
+./vendor/bin/phpstan analyse --memory-limit=1G
+
+# Rodar Laravel Pint (padronização de código)
+echo "🎨 Rodando Laravel Pint..."
+./vendor/bin/pint --test
+
+# Rodar Rector (refatoração automática)
+echo "🔧 Rodando Rector..."
+./vendor/bin/rector process --dry-run
+
+# Rodar os testes
+echo "🧪 Rodando testes com Pest..."
+./vendor/bin/sail test
+
+# Verificar se algum comando falhou
+if [ $? -ne 0 ]; then
+    echo "❌ O push foi bloqueado porque um dos comandos falhou."
+    exit 1
+fi
+
+echo "✅ Tudo certo! Enviando código..."
+exit 0
