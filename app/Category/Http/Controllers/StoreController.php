@@ -3,13 +3,12 @@
 namespace App\Category\Http\Controllers;
 
 use App\Category\DTOs\CreateCategoryDTO;
-use App\Common\Http\Controllers\Controller;
 use App\Category\Http\Requests\StoreCategoryRequest;
 use App\Category\Http\Resources\CategoryCreateResource;
 use App\Category\Services\CreateCategoryService;
+use App\Common\Http\Controllers\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 
 class StoreController extends Controller
 {
@@ -30,7 +29,7 @@ class StoreController extends Controller
                 status: Response::HTTP_CREATED,
                 data: CategoryCreateResource::make($category)
             );
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->errorResponse(
                 message :"Unexpected error",
                 status: Response::HTTP_INTERNAL_SERVER_ERROR

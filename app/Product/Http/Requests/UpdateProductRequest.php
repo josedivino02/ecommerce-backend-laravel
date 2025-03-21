@@ -3,9 +3,8 @@
 namespace App\Product\Http\Requests;
 
 use App\Category\Rules\CategoryExists;
-use App\Product\Rules\ValidProductForUpdated;
-use App\Product\Rules\ValidProductStatus;
 use App\Common\Trait\FailValidate;
+use App\Product\Rules\{ValidProductForUpdated, ValidProductStatus};
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
@@ -17,17 +16,22 @@ class UpdateProductRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            "product" => $this->route()->product,
+            "product" => $this->route('product'),
         ]);
     }
 
     public function authorize(): bool
     {
-        $product = $this->route()->product;
+        $product = $this->route('product');
 
         return Gate::allows("update", $product);
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [
@@ -43,6 +47,11 @@ class UpdateProductRequest extends FormRequest
         ];
     }
 
+    /**
+     * Get the custom validation messages.
+     *
+     * @return array<string, string>
+     */
     public function messages(): array
     {
         return [

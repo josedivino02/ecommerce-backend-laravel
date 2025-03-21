@@ -2,9 +2,9 @@
 
 namespace App\Category\Services;
 
-use App\Category\Models\Category;
 use App\Category\Contracts\Repositories\CategoryRepositoryInterface;
 use App\Category\DTOs\UpdateCategoryDTO;
+use App\Category\Models\Category;
 use Illuminate\Support\Str;
 
 class UpdateCategoryService
@@ -21,7 +21,7 @@ class UpdateCategoryService
 
         $filteredData = array_filter(
             $data->toArray(),
-            fn($value) => !is_null($value)
+            fn ($value): bool => !is_null($value)
         );
 
         return $this->categoryRepository

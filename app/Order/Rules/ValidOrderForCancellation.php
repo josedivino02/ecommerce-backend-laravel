@@ -2,10 +2,7 @@
 
 namespace App\Order\Rules;
 
-use App\Order\Enums\PaymentStatus;
-use App\Order\Enums\ShippingStatus;
-use App\Order\Enums\OrderStatus;
-
+use App\Order\Enums\{OrderStatus, PaymentStatus, ShippingStatus};
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 

@@ -7,22 +7,22 @@ use Illuminate\Support\Facades\Route;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        using: function() {
+        using: function (): void {
             Route::prefix("api")
                 ->middleware("api")
                 ->group(base_path("app/Auth/routes/api.php"))
-                ->group(function() {
+                ->group(function (): void {
                     Route::middleware([JwtAuthenticationMiddleware::class, "throttle:api"])
                         ->group(base_path("app/Category/routes/api.php"))
                         ->group(base_path("app/Order/routes/api.php"))
                         ->group(base_path("app/OrderItem/routes/api.php"))
                         ->group(base_path("app/Product/routes/api.php"));
                 });
-            }
+        }
     )
-    ->withMiddleware(function (Middleware $middleware) {
+    ->withMiddleware(function (Middleware $middleware): void {
 
     })
-    ->withExceptions(function (Exceptions $exceptions) {
+    ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

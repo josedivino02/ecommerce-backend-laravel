@@ -13,6 +13,11 @@ class ShippingCost extends Model
     use SoftDeletes;
     use RouteBindingResolver;
 
+    /**
+     * Defines the relationship between a shipping cost and orders.
+     *
+     * @return HasMany<Order, ShippingCost>
+     */
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);

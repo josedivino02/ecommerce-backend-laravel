@@ -8,8 +8,7 @@ use App\Product\Http\Requests\UpdateProductRequest;
 use App\Product\Models\Product;
 use App\Product\Services\UpdateProductService;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 
 class UpdateController extends Controller
 {
@@ -42,7 +41,7 @@ class UpdateController extends Controller
                 message: "The product successfully updated",
                 status: Response::HTTP_OK
             );
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->errorResponse(
                 message :"Unexpected error",
                 status: Response::HTTP_INTERNAL_SERVER_ERROR

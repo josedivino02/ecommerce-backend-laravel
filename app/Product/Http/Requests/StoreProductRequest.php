@@ -2,9 +2,9 @@
 
 namespace App\Product\Http\Requests;
 
-use App\Product\Models\Product;
 use App\Category\Rules\SubCategoryExists;
 use App\Common\Trait\FailValidate;
+use App\Product\Models\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
@@ -18,6 +18,11 @@ class StoreProductRequest extends FormRequest
         return Gate::allows("isAdmin", Product::class);
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [
@@ -31,6 +36,11 @@ class StoreProductRequest extends FormRequest
         ];
     }
 
+    /**
+     * Get the custom validation messages.
+     *
+     * @return array<string, string>
+     */
     public function messages(): array
     {
         return [

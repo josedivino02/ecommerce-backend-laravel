@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 
 class IndexController extends Controller
 {
-    public function __construct(private ListPaginatedCategoryService $categoryService)
+    public function __construct(private readonly ListPaginatedCategoryService $categoryService)
     {
     }
 
@@ -23,7 +23,7 @@ class IndexController extends Controller
                 ->listPaginated($request->all());
 
             return  CategoryIndexResource::collection($category);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->errorResponse(
                 message :"Unexpected error",
                 status: Response::HTTP_INTERNAL_SERVER_ERROR

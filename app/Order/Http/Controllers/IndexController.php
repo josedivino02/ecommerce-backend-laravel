@@ -22,7 +22,7 @@ class IndexController extends Controller
                 ->listPaginated($request->all());
 
             return OrderIndexResource::collection($orders);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->errorResponse(
                 message :"Unexpected error",
                 status: Response::HTTP_INTERNAL_SERVER_ERROR

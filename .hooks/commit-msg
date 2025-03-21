@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+
+# Cores para saída no terminal
+NC='\033[0m'
+BBlue='\033[1;34m'
+BRed='\033[1;31m'
+
+# Captura a mensagem do commit
+COMMIT_MESSAGE=$(cat "$1")
+
+# Lista de tags semânticas permitidas
+SEMANTIC_TAGS=("docs:" "feat:" "fix:" "perf:" "test:" "refactor:" "style:" "build:" "ci:" "chore:" "revert:" "Merge")
+
+# Valida se a mensagem de commit contém alguma das tags semânticas permitidas
+for TAG in "${SEMANTIC_TAGS[@]}"; do
+  if [[ $COMMIT_MESSAGE == "$TAG"* ]]; then
+    echo -e "${BBlue}✅ Commit válido! Mensagem segue o padrão semântico.${NC}"
+    exit 0
+  fi
+done
+
+# Se nenhuma tag semântica for encontrada, bloqueia o commit
+echo -e "${BRed}❌ ERRO: A mensagem de commit deve começar com uma das tags semânticas:${NC}"
+echo -e "${BRed}   - docs:      Atualizações na documentação${NC}"
+echo -e "${BRed}   - feat:      Adição de nova funcionalidade${NC}"
+echo -e "${BRed}   - fix:       Correção de bug${NC}"
+echo -e "${BRed}   - perf:      Melhorias de performance${NC}"
+echo -e "${BRed}   - test:      Adição ou atualização de testes${NC}"
+echo -e "${BRed}   - refactor:  Refatoração sem mudanças na lógica${NC}"
+echo -e "${BRed}   - style:     Mudanças de estilo (espaços, indentação)${NC}"
+echo -e "${BRed}   - build:     Mudanças na build do projeto${NC}"
+echo -e "${BRed}   - ci:        Atualizações de CI/CD${NC}"
+echo -e "${BRed}   - chore:     Outras mudanças que não impactam o código-fonte${NC}"
+echo -e "${BRed}   - revert:    Reversão de um commit anterior${NC}"
+echo -e "${BRed}   - Merge:     Commits de merge${NC}"
+
+exit 1

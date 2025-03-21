@@ -2,10 +2,10 @@
 
 namespace App\Product\Services;
 
-use App\Product\Enums\ProductStatus;
-use App\Product\Models\Product;
 use App\Product\Contracts\Repositories\ProductRepositoryInterface;
 use App\Product\DTOs\CreateProductDTO;
+use App\Product\Enums\ProductStatus;
+use App\Product\Models\Product;
 use Illuminate\Support\Str;
 
 class CreateProductService

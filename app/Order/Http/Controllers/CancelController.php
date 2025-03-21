@@ -32,7 +32,7 @@ class CancelController extends Controller
                 message: "The order and the respective items related to the order have been canceled",
                 status: Response::HTTP_OK
             );
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->errorResponse(
                 message :"Unexpected error",
                 status: Response::HTTP_INTERNAL_SERVER_ERROR

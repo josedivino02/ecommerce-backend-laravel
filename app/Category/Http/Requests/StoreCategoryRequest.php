@@ -18,6 +18,9 @@ class StoreCategoryRequest extends FormRequest
         return Gate::allows("create", Category::class);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [

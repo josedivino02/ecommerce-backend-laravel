@@ -1,8 +1,6 @@
 <?php
 
-use App\Auth\Http\Controllers\LoginController;
-use App\Auth\Http\Controllers\RegisterController;
-use App\Auth\Http\Controllers\LogoutController;
+use App\Auth\Http\Controllers\{LoginController, LogoutController, RegisterController};
 use App\Common\Http\Middleware\{JwtAuthenticationMiddleware};
 
 use Illuminate\Support\Facades\Route;

@@ -12,21 +12,21 @@ class ProductPolicy
         return user()->isAdmin === 'S';
     }
 
-    public function update(User $user, Product $product)
+    public function update(User $user, Product $product): bool
     {
         return auth()->check()
             && $this->isAdmin()
             && $this->ownedBy($user, $product);
     }
 
-    public function delete(User $user, Product $product)
+    public function delete(User $user, Product $product): bool
     {
         return auth()->check()
             && $this->isAdmin()
             && $this->ownedBy($user, $product);
     }
 
-    public function ownedBy(User $user, Product $product)
+    public function ownedBy(User $user, Product $product): bool
     {
         return $user->id === $product->user_id;
     }

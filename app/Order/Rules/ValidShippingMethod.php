@@ -4,8 +4,8 @@ namespace App\Order\Rules;
 
 use App\Order\Enums\ShippingMethod;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
 
 class ValidShippingMethod implements ValidationRule
 {

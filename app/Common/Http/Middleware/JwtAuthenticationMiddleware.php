@@ -10,15 +10,15 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class JwtAuthenticationMiddleware
 {
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         try {
             JWTAuth::parseToken()->authenticate();
-        } catch (TokenExpiredException $e) {
+        } catch (TokenExpiredException) {
             return response()->json(["error" => "The access token has expired, please log in again."], Response::HTTP_UNAUTHORIZED);
-        } catch (TokenInvalidException $e) {
+        } catch (TokenInvalidException) {
             return response()->json(["error" => "The access token is invalid, log in again to generate a valid token"], Response::HTTP_UNAUTHORIZED);
-        } catch (JWTException $e) {
+        } catch (JWTException) {
             return response()->json(["error" => "Token not provided, please log in"], Response::HTTP_BAD_REQUEST);
         }
 

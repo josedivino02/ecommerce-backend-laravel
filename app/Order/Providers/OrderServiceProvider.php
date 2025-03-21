@@ -17,7 +17,7 @@ class OrderServiceProvider extends ServiceProvider
         $this->app->bind(
             OrderRepositoryInterface::class,
             OrderRepository::class
-            );
+        );
     }
 
     public function boot(): void

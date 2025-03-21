@@ -10,9 +10,16 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 interface OrderRepositoryInterface
 {
     public function create(CreateOrderDTO $data): Order;
+
     public function addItems(Order $order, array $data): OrderItem;
+
     public function cancelOrder(Order $order, array $data): bool;
+
     public function cancelItemsFromOrder(Order $order, array $data): bool;
     public function updateTotalPrice(Order $order, float $price): bool;
+
+    /**
+     * @param array<string, mixed>|null $params
+     */
     public function listPaginated(?array $params, ?int $perPage): LengthAwarePaginator;
 }

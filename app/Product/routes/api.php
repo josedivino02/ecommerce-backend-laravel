@@ -1,12 +1,11 @@
 <?php
 
-use App\Common\Http\Middleware\IsAdminMiddleware;
-use App\Common\Http\Middleware\JwtAuthenticationMiddleware;
-use App\Product\Http\Controllers\{IndexController, StoreController, UpdateController, DeleteController};
+use App\Common\Http\Middleware\{IsAdminMiddleware};
+use App\Product\Http\Controllers\{DeleteController, IndexController, StoreController, UpdateController};
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix("products")->middleware(IsAdminMiddleware::class)->group(function () {
+Route::prefix("products")->middleware(IsAdminMiddleware::class)->group(function (): void {
     Route::post("/", StoreController::class)->name("products.store");
     Route::get("/", IndexController::class)->name("products.index");
     Route::put("/{product}/update", UpdateController::class)->name("products.update");

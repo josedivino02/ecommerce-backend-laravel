@@ -2,11 +2,9 @@
 
 namespace App\Order\Services;
 
-use App\Order\Enums\PaymentStatus;
-use App\Order\Enums\ShippingStatus;
-use App\Order\Enums\OrderStatus;
-use App\Order\Models\Order;
 use App\Order\Contracts\Repositories\OrderRepositoryInterface;
+use App\Order\Enums\{OrderStatus, PaymentStatus, ShippingStatus};
+use App\Order\Models\Order;
 use App\OrderItem\Enums\OrderItemsStatus;
 
 class CancelOrderService

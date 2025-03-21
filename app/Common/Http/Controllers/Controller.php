@@ -6,12 +6,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 abstract class Controller
 {
-    protected function successResponse($data = "", string $message = "", int $status = 200): JsonResponse
+    protected function successResponse(mixed $data = "", string $message = "", int $status = 200): JsonResponse
     {
         $responseSuccess = ["status" => "success"];
 
-        if(!empty($message)) $responseSuccess["message"] = $message;
-        if(!empty($data)) $responseSuccess["data"] = $data;
+        if ($message !== '' && $message !== '0') {
+            $responseSuccess["message"] = $message;
+        }
+
+        if (!empty($data)) {
+            $responseSuccess["data"] = $data;
+        }
 
         return response()->json(
             $responseSuccess,
@@ -19,16 +24,21 @@ abstract class Controller
         );
     }
 
-    protected function errorResponse(string $message, int $status = 400, $errors = null): JsonResponse
+    protected function errorResponse(string $message, int $status = 400, mixed $errors = null): JsonResponse
     {
         $responseError = ["status" => "error"];
 
-        if(!empty($message)) $responseError["message"] = $message;
-        if(!empty($errors)) $responseError["errors"] = $errors;
+        if ($message !== '' && $message !== '0') {
+            $responseError["message"] = $message;
+        }
+
+        if (!empty($errors)) {
+            $responseError["errors"] = $errors;
+        }
 
         return response()->json(
             $responseError,
             $status
-            );
+        );
     }
 }

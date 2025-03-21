@@ -12,6 +12,10 @@ class ListPaginatedCategoryService
     {
     }
 
+    /**
+     * @param array<string, mixed> $params
+     * @return LengthAwarePaginator<array<string, mixed>>
+     */
     public function listPaginated(array $params = [], int $perPage = 10): LengthAwarePaginator
     {
         return $this->categoryRepository

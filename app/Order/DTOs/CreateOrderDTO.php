@@ -2,13 +2,13 @@
 
 namespace App\Order\DTOs;
 
-use App\Order\Enums\OrderStatus;
-use App\Order\Enums\PaymentMethod;
-use App\Order\Enums\PaymentStatus;
-use App\Order\Enums\ShippingMethod;
-use App\Order\Enums\ShippingStatus;
+use App\Order\Enums\{OrderStatus, PaymentMethod, PaymentStatus, ShippingMethod, ShippingStatus};
+
 class CreateOrderDTO
 {
+    /**
+     * @param array<int, array<string, mixed>> $items
+     */
     public function __construct(
         public string $uuid,
         public readonly string $shipping_address,
@@ -23,8 +23,12 @@ class CreateOrderDTO
         public OrderStatus $status,
         public string $verification_code,
         public float $total_price = 0,
-    ) {}
+    ) {
+    }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public static function make(array $data): self
     {
         return new self(
@@ -44,6 +48,9 @@ class CreateOrderDTO
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return get_object_vars($this);

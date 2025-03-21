@@ -22,18 +22,14 @@ function genericRateLimiter(
     string $limitMethod,
     string $errorMessage = "The system is receiving an excessive number of requests. Please reduce the request rate."
 ): void {
-    RateLimiter::for($name, function (Request $request) use ($envName, $limitMethod, $errorMessage): mixed {
-        return Limit::$limitMethod(env($envName, 1))
-            ->by(user()?->id ?? $request->ip())
-            ->response(function () use ($errorMessage): JsonResponse {
-                return response()->json(
-                    [
-                        "status" => "error",
-                        "message" => "Limiter exceeded",
-                        "errors" => $errorMessage,
-                    ],
-                    Response::HTTP_TOO_MANY_REQUESTS
-                );
-            });
-    });
+    RateLimiter::for($name, fn (Request $request): mixed => Limit::$limitMethod(config($envName, 1))
+        ->by(user()->id ?? $request->ip())
+        ->response(fn (): JsonResponse => response()->json(
+            [
+                "status"  => "error",
+                "message" => "Limiter exceeded",
+                "errors"  => $errorMessage,
+            ],
+            Response::HTTP_TOO_MANY_REQUESTS
+        )));
 }

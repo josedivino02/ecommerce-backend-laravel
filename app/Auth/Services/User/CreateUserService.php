@@ -2,8 +2,8 @@
 
 namespace App\Auth\Services\User;
 
-use App\Auth\Models\User;
 use App\Auth\Contracts\Repositories\UserRepositoryInterface;
+use App\Auth\Models\User;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -14,6 +14,9 @@ class CreateUserService
     {
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function create(array $data): User
     {
 

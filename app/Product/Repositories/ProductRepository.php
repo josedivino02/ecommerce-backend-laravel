@@ -15,6 +15,10 @@ class ProductRepository implements ProductRepositoryInterface
         return Product::create($data->toArray());
     }
 
+    /**
+     * @param array<string, mixed> $params
+     * @return LengthAwarePaginator<Product>
+     */
     public function listPaginated(?array $params = [], ?int $perPage = 10): LengthAwarePaginator
     {
         return Product::query()
@@ -24,6 +28,9 @@ class ProductRepository implements ProductRepositoryInterface
             ->paginate($perPage);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function update(Product $product, array $data): Product
     {
         $product->update($data);

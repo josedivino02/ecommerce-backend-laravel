@@ -4,8 +4,8 @@ namespace App\Order\Rules;
 
 use App\Order\Enums\PaymentMethod;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
 
 class ValidPaymentMethod implements ValidationRule
 {

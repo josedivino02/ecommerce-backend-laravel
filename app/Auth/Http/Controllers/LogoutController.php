@@ -2,11 +2,10 @@
 
 namespace App\Auth\Http\Controllers;
 
-use App\Common\Http\Controllers\Controller;
 use App\Auth\Services\Auth\AuthService;
+use App\Common\Http\Controllers\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 use Tymon\JWTAuth\Exceptions\{JWTException, TokenExpiredException, TokenInvalidException};
 
 class LogoutController extends Controller
@@ -28,21 +27,21 @@ class LogoutController extends Controller
             $this->authService
                 ->logout();
 
-                return $this->successResponse(
-                    message: "Successful logout!",
-                    status: Response::HTTP_OK
-                );
-        } catch (TokenInvalidException $e) {
+            return $this->successResponse(
+                message: "Successful logout!",
+                status: Response::HTTP_OK
+            );
+        } catch (TokenInvalidException) {
             return $this->errorResponse(
                 message :"Token is invalid!",
                 status: Response::HTTP_UNAUTHORIZED
             );
-        } catch (TokenExpiredException $e) {
+        } catch (TokenExpiredException) {
             return $this->errorResponse(
                 message :"Token has already expired!",
                 status: Response::HTTP_UNAUTHORIZED
             );
-        } catch (JWTException $e) {
+        } catch (JWTException) {
             return $this->errorResponse(
                 message :"Unable to logout, token not provided!",
                 status: Response::HTTP_BAD_REQUEST

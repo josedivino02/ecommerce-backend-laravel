@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table): void {
             $table->unsignedBigInteger('shipping_costs_id')->after('shipping_method');
             $table->foreign('shipping_costs_id')->references('id')->on('shipping_costs')->onDelete('set null');
 
@@ -17,7 +17,7 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table): void {
             $table->decimal('shipping_cost', 10, 2)->default(0.00)->after('shipping_method');
             $table->dropForeign(['shipping_costs_id']);
             $table->dropColumn('shipping_costs_id');
