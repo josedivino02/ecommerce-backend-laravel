@@ -3,6 +3,7 @@
 namespace App\Auth\Services\Auth;
 
 use App\Auth\Contracts\Services\AuthServiceInterface;
+use App\Auth\Models\User;
 
 class AuthService
 {
@@ -10,11 +11,15 @@ class AuthService
     {
     }
 
+    /**
+     * @param array<string, mixed> $credentials
+     * @return array<string, mixed>
+     */
     public function login(array $credentials): array
     {
         $token = $this->authService->attempt($credentials);
 
-        if (!$token) {
+        if ($token === null || $token === '' || $token === '0') {
             return [];
         }
 
@@ -23,11 +28,7 @@ class AuthService
 
     public function authenticate(): bool
     {
-        if (!$this->authService->authenticate()) {
-            return false;
-        }
-
-        return true;
+        return $this->authService->authenticate() instanceof User;
     }
 
     public function logout(): void
@@ -35,6 +36,9 @@ class AuthService
         $this->authService->logout();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function payLoad(string $token): array
     {
         $user = user();

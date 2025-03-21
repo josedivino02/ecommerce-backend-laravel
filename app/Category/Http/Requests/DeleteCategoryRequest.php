@@ -16,7 +16,7 @@ class DeleteCategoryRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            "category" => $this->route()->category,
+            "category" => $this->route("category"),
         ]);
     }
 
@@ -25,6 +25,9 @@ class DeleteCategoryRequest extends FormRequest
         return Gate::allows("delete", Category::class);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [

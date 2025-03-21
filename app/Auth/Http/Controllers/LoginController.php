@@ -2,12 +2,11 @@
 
 namespace App\Auth\Http\Controllers;
 
-use App\Common\Http\Controllers\Controller;
 use App\Auth\Http\Requests\LoginRequest;
 use App\Auth\Services\Auth\AuthService;
+use App\Common\Http\Controllers\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class LoginController extends Controller
@@ -24,7 +23,7 @@ class LoginController extends Controller
             $response = $this->authService
                 ->login($credentials);
 
-            if (!$response) {
+            if ($response === []) {
                 return $this->errorResponse(
                     message :"Invalid credentials!",
                     status: Response::HTTP_UNAUTHORIZED
@@ -36,7 +35,7 @@ class LoginController extends Controller
                 status: Response::HTTP_OK,
                 data: $response,
             );
-        } catch (JWTException $e) {
+        } catch (JWTException) {
             return $this->errorResponse(
                 message :"It was not possible to create the token.",
                 status: Response::HTTP_INTERNAL_SERVER_ERROR

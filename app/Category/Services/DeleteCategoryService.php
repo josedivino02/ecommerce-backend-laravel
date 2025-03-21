@@ -2,8 +2,8 @@
 
 namespace App\Category\Services;
 
-use App\Category\Models\Category;
 use App\Category\Contracts\Repositories\CategoryRepositoryInterface;
+use App\Category\Models\Category;
 
 class DeleteCategoryService
 {

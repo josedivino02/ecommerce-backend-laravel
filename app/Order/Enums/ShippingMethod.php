@@ -8,6 +8,10 @@ enum ShippingMethod: string
     case EXPRESS  = "express";
     case SAME_DAY = "same_day";
     case PICKUP   = "pickup";
+
+    /**
+     * @return string[]
+     */
     public static function values(): array
     {
         return array_column(self::cases(), "value");

@@ -8,12 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait FailValidate
 {
-    public function failedValidation(Validator $validator)
+    public function failedValidation(Validator $validator): never
     {
         throw new HttpResponseException(response()->json([
-            "status" => "error",
+            "status"  => "error",
             "message" => "Invalid data",
-            "errors" => $validator->errors(),
+            "errors"  => $validator->errors(),
         ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

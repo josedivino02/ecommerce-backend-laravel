@@ -15,8 +15,14 @@ class UpdateProductDTO
         public readonly ?string $sku = null,
         public readonly ?string $image_url = null,
         public readonly ?int $category_id = null,
-    ) {}
+    ) {
+    }
 
+    /**
+     * Create a new UpdateProductDTO instance.
+     *
+     * @param array<string, mixed> $data
+     */
     public static function make(array $data): self
     {
         return new self(
@@ -31,6 +37,11 @@ class UpdateProductDTO
         );
     }
 
+    /**
+     * Convert the DTO to an array.
+     *
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return get_object_vars($this);

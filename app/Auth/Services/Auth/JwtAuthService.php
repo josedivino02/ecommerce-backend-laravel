@@ -4,11 +4,14 @@ namespace App\Auth\Services\Auth;
 
 use App\Auth\Contracts\Services\AuthServiceInterface;
 use App\Auth\Models\User;
-
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class JwtAuthService implements AuthServiceInterface
 {
+    /**
+     * @param array<string, mixed> $credentials
+     */
     public function attempt(array $credentials): string|null
     {
         return JWTAuth::attempt($credentials);
@@ -17,16 +20,23 @@ class JwtAuthService implements AuthServiceInterface
     public function logout(): bool
     {
         try {
-            JWTAuth::invalidate(JWTAuth::getToken());
+            JWTAuth::invalidate(JWTAuth::getToken(), false);
+
             return true;
-        } catch (\Throwable $th) {
+        } catch (\Throwable) {
             return false;
         }
 
     }
 
-    public function authenticate(): User|null
+    public function authenticate(): ?User
     {
-        return JWTAuth::parseToken()->authenticate();
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+
+            return $user instanceof User ? $user : null;
+        } catch (JWTException) {
+            return null;
+        }
     }
 }

@@ -7,8 +7,7 @@ use App\Product\Http\Requests\DeleteProductRequest;
 use App\Product\Models\Product;
 use App\Product\Services\DeleteProductService;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 
 class DeleteController extends Controller
 {
@@ -25,7 +24,7 @@ class DeleteController extends Controller
             return $this->successResponse(
                 status: Response::HTTP_NO_CONTENT
             );
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->errorResponse(
                 message :"Unexpected error",
                 status: Response::HTTP_INTERNAL_SERVER_ERROR

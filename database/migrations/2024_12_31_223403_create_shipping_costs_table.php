@@ -10,7 +10,7 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('shipping_costs', function (Blueprint $table) {
+        Schema::create('shipping_costs', function (Blueprint $table): void {
             $table->id();
             $table->uuid();
             $table->string('name');

@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 use Rector\Config\RectorConfig;
 
@@ -10,7 +8,6 @@ return RectorConfig::configure()
         __DIR__ . '/bootstrap/app.php',
         __DIR__ . '/database',
         __DIR__ . '/tests',
-        __DIR__ . '/routes',
     ])
     ->withPreparedSets(
         deadCode: true,
@@ -18,6 +15,6 @@ return RectorConfig::configure()
         typeDeclarations: true,
         privatization: true,
         earlyReturn: true,
-        strictBooleans: true
+        strictBooleans: true,
     )
     ->withPhpSets();

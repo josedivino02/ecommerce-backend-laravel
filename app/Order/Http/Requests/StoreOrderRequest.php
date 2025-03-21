@@ -2,14 +2,10 @@
 
 namespace App\Order\Http\Requests;
 
-use App\Order\Rules\ValidPaymentMethod;
-use App\Order\Rules\ValidShippingCost;
-use App\Order\Rules\ValidShippingMethod;
-use App\Order\Models\Order;
-use App\Product\Rules\ProductExists;
-use App\Product\Rules\QuantityProduct;
 use App\Common\Trait\FailValidate;
-use App\Order\Rules\AtLeastOneItem;
+use App\Order\Models\Order;
+use App\Order\Rules\{AtLeastOneItem, ValidPaymentMethod, ValidShippingCost, ValidShippingMethod};
+use App\Product\Rules\{ProductExists, QuantityProduct};
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
@@ -22,6 +18,9 @@ class StoreOrderRequest extends FormRequest
         return Gate::allows("create", Order::class);
     }
 
+    /**
+     * @return array<string, array<mixed>>
+     */
     public function rules(): array
     {
         return [
@@ -40,7 +39,7 @@ class StoreOrderRequest extends FormRequest
 
     protected function validateQuantityWithProductId(): callable
     {
-        return function ($attribute, $value, $fail) {
+        return function ($attribute, $value, $fail): void {
             $index     = $this->extractIndex($attribute);
             $productId = $this->input("items.{$index}.product_id");
             (new QuantityProduct($productId))->validate($attribute, $value, $fail);
@@ -51,7 +50,7 @@ class StoreOrderRequest extends FormRequest
     {
         preg_match('/items\.(\d+)\.quantity/', $attribute, $matches);
 
-        return $matches[1] ?? null;
+        return isset($matches[1]) ? (int) $matches[1] : null;
     }
 
 }

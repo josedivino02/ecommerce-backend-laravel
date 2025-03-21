@@ -2,12 +2,13 @@
 
 namespace App\Product\Rules;
 
+use App\Product\Enums\ProductStatus;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class ValidProductForUpdated implements ValidationRule
 {
-    public function __construct(private $status)
+    public function __construct(private readonly ProductStatus $status)
     {
     }
 

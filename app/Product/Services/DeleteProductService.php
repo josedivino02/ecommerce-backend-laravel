@@ -2,8 +2,8 @@
 
 namespace App\Product\Services;
 
-use App\Product\Models\{Product};
 use App\Product\Contracts\Repositories\ProductRepositoryInterface;
+use App\Product\Models\{Product};
 
 class DeleteProductService
 {

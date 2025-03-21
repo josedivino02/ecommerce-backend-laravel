@@ -2,12 +2,13 @@
 
 namespace App\Category\Rules;
 
+use App\Category\Enums\CategoryStatus;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class ValidCategoryForUpdated implements ValidationRule
 {
-    public function __construct(private $status)
+    public function __construct(private readonly CategoryStatus $status)
     {
     }
 

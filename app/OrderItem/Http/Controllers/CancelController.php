@@ -8,8 +8,7 @@ use App\OrderItem\Http\Requests\CancelOrderItemRequest;
 use App\OrderItem\Models\OrderItem;
 use App\OrderItem\Services\CancelItemService;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 
 class CancelController extends Controller
 {
@@ -34,7 +33,7 @@ class CancelController extends Controller
                 message: "The item related to the order have been canceled",
                 status: Response::HTTP_OK
             );
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->errorResponse(
                 message :"Unexpected error",
                 status: Response::HTTP_INTERNAL_SERVER_ERROR

@@ -3,17 +3,16 @@
 namespace App\Category\Http\Controllers;
 
 use App\Category\DTOs\UpdateCategoryDTO;
-use App\Common\Http\Controllers\Controller;
 use App\Category\Http\Requests\UpdateCategoryRequest;
 use App\Category\Models\Category;
 use App\Category\Services\UpdateCategoryService;
+use App\Common\Http\Controllers\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 
 class UpdateController extends Controller
 {
-    public function __construct(private UpdateCategoryService $categoryService)
+    public function __construct(private readonly UpdateCategoryService $categoryService)
     {
     }
 
@@ -37,7 +36,7 @@ class UpdateController extends Controller
                 message: "The Category successfully updated",
                 status: Response::HTTP_OK
             );
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->errorResponse(
                 message :"Unexpected error",
                 status: Response::HTTP_INTERNAL_SERVER_ERROR

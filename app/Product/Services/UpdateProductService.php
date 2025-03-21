@@ -2,9 +2,9 @@
 
 namespace App\Product\Services;
 
-use App\Product\Models\Product;
 use App\Product\Contracts\Repositories\ProductRepositoryInterface;
 use App\Product\DTOs\UpdateProductDTO;
+use App\Product\Models\Product;
 
 class UpdateProductService
 {
@@ -16,7 +16,7 @@ class UpdateProductService
     {
         $filteredData = array_filter(
             $data->toArray(),
-            fn($value) => !is_null($value)
+            fn ($value): bool => !is_null($value)
         );
 
         return $this->productRepository

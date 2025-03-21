@@ -8,8 +8,7 @@ use App\Order\Http\Requests\StoreOrderRequest;
 use App\Order\Http\Resources\OrderCreateResource;
 use App\Order\Services\CreateOrderService;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 
 class StoreController extends Controller
 {
@@ -30,7 +29,7 @@ class StoreController extends Controller
                 status: Response::HTTP_CREATED,
                 data: OrderCreateResource::make($order),
             );
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->errorResponse(
                 message :"Unexpected error",
                 status: Response::HTTP_INTERNAL_SERVER_ERROR

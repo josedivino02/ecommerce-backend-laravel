@@ -4,16 +4,17 @@ namespace App\Order\Rules;
 
 use App\Order\Models\ShippingCost;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
 
 class ValidShippingCost implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $shippingCostId = ShippingCost::where("id", $value);
+        $shippingCostExists = ShippingCost::where("id", $value)
+            ->exists();
 
-        if (empty($shippingCostId)) {
+        if (!$shippingCostExists) {
             $fail("The $attribute must be a valid registered shipping cost");
         }
     }

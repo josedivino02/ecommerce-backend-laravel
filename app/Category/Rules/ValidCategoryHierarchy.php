@@ -2,12 +2,13 @@
 
 namespace App\Category\Rules;
 
+use App\Category\Models\Category;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class ValidCategoryHierarchy implements ValidationRule
 {
-    public function __construct(private $category)
+    public function __construct(private readonly Category $category)
     {
     }
 

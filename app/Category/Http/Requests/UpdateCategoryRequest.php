@@ -3,10 +3,7 @@
 namespace App\Category\Http\Requests;
 
 use App\Category\Models\Category;
-use App\Category\Rules\SubCategoryExists;
-use App\Category\Rules\ValidCategoryForUpdated;
-use App\Category\Rules\ValidCategoryHierarchy;
-use App\Category\Rules\ValidCategoryStatus;
+use App\Category\Rules\{SubCategoryExists, ValidCategoryForUpdated, ValidCategoryHierarchy, ValidCategoryStatus};
 use App\Common\Trait\FailValidate;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -19,7 +16,7 @@ class UpdateCategoryRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            "category" => $this->route()->category,
+            "category" => $this->route("category"),
         ]);
     }
 
@@ -28,6 +25,9 @@ class UpdateCategoryRequest extends FormRequest
         return Gate::allows("update", Category::class);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [
@@ -35,7 +35,7 @@ class UpdateCategoryRequest extends FormRequest
             "name"        => ["nullable", "string", "unique:categories,name", "min:1", "max:255"],
             "description" => ["nullable", "string", "min:1"],
             "status"      => ["nullable", new ValidCategoryStatus()],
-            "subcategory" => ["nullable", "integer", new SubCategoryExists(), new ValidCategoryHierarchy($this->route()->category)],
+            "subcategory" => ["nullable", "integer", new SubCategoryExists(), new ValidCategoryHierarchy($this->route("category"))],
         ];
     }
 
